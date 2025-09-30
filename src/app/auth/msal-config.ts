@@ -19,7 +19,7 @@ export function msalInstanceFactory(): IPublicClientApplication {
     },
     cache: {
       cacheLocation: 'localStorage',
-      storeAuthStateInCookie: false,
+      storeAuthStateInCookie: true, // important for cookies support across browsers
     },
   });
 }
@@ -36,6 +36,8 @@ export function msalGuardConfigFactory(): MsalGuardConfiguration {
 export function msalInterceptorConfigFactory(): MsalInterceptorConfiguration {
   return {
     interactionType: InteractionType.Redirect,
-    protectedResourceMap: new Map(),
+    protectedResourceMap: new Map([
+      [environment.apiBaseUrl, environment.msal.scopes],
+    ]),
   };
 }
