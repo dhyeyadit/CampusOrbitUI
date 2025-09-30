@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { MsalGuard } from '@azure/msal-angular';
 
 export const adminRoutes: Routes = [
   {
@@ -12,5 +13,6 @@ export const adminRoutes: Routes = [
       import('./views/dashboard/dashboard.component').then(
         (m) => m.DashboardComponent
       ),
+      canActivate: [MsalGuard],
   },
 ];

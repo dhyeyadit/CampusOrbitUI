@@ -1,6 +1,7 @@
 // src/app/features/student/student.routes.ts
 
 import { Routes } from '@angular/router';
+import { MsalGuard } from '@azure/msal-angular';
 
 export const studentRoutes: Routes = [
     {
@@ -9,6 +10,7 @@ export const studentRoutes: Routes = [
       import('./views/dashboard/dashboard.component').then(
         (m) => m.DashboardComponent
       ),
+      canActivate: [MsalGuard],
   },
     {
     path: '',
@@ -16,12 +18,15 @@ export const studentRoutes: Routes = [
       import('./views/profile/profile.component').then(
         (m) => m.ProfileComponent
       ),
+      canActivate: [MsalGuard],
   },
   {
-    path: ':id',
-    loadComponent: () =>
-      import('./views/registrations/registrations.component').then(
-        (m) => m.RegistrationsComponent
-      ),
-  },
+  path: 'registrations',
+  loadComponent: () =>
+    import('./views/registrations/registrations.component').then(
+      (m) => m.RegistrationsComponent
+    ),
+    canActivate: [MsalGuard],
+}
+
 ];
