@@ -1,24 +1,36 @@
-import { Component, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { MsalService } from '@azure/msal-angular';
+import { AuthenticationResult } from '@azure/msal-browser';
+import { environment } from '../environments/environment.development';
+import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
+  template: `<router-outlet/>`,
   imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
 })
-export class AppComponent {
-  title = 'CampusOrbitApp';
+export class AppComponent implements OnInit {
+  constructor(private msalService: MsalService, private router: Router) {}
 
-  private msal = inject(MsalService);
+  ngOnInit(): void {
+    this.msalService.instance.handleRedirectPromise()
+      .then((result: AuthenticationResult | null) => {
+        if (result && result.account) {
+          this.msalService.instance.setActiveAccount(result.account);
+        }
 
-  constructor() {
-    const accounts = this.msal.instance.getAllAccounts();
-    if (accounts.length === 0) {
-      this.msal.loginRedirect();
-    } else {
-      this.msal.instance.setActiveAccount(accounts[0]);
-    }
+        if (!this.msalService.instance.getActiveAccount()) {
+          // Only trigger loginRedirect if NOT already on redirectUri path
+          if (this.router.url !== '/' && this.router.url !== '/redirect') {
+            this.msalService.loginRedirect({
+              scopes: environment.msal.scopes,
+            });
+          }
+        }
+      })
+      .catch((error) => {
+        console.error('MSAL redirect error:', error);
+      });
   }
 }
