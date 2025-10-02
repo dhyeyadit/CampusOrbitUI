@@ -16,6 +16,10 @@ export class UserService {
   private loader = inject(LoaderService);
   baseUrl = environment.authConfig.apiUrl;
 
+  logout(){
+    this.msalService.logoutRedirect()
+  }
+
   getUser$(): Observable<Response<User>> {
     this.loader.show(); // show loader before any request
 
