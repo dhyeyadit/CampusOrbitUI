@@ -20,26 +20,32 @@ import {
 
 import { AppComponent } from './app/app.component';
 import { routes } from './app/app.routes';
+import { LoaderInterceptor } from './app/common/interceptors/loader.interceptor';
 
 async function bootstrap() {
-  // Create MSAL instance
+  // 1️⃣ Create and initialize MSAL instance
   const msalInstance = msalInstanceFactory();
-
   try {
-    // Await initialize() before anything else
     await msalInstance.initialize();
 
-    // After initialization, bootstrap the Angular app and provide MSAL stuff
+    // 2️⃣ Bootstrap Angular standalone app
     await bootstrapApplication(AppComponent, {
       providers: [
         provideRouter(routes),
         provideHttpClient(),
+        // HTTP interceptors
         {
           provide: HTTP_INTERCEPTORS,
-          useClass: MsalInterceptor,
+          useClass: LoaderInterceptor,  // Loader for all HTTP requests
           multi: true,
         },
-        { provide: MSAL_INSTANCE, useValue: msalInstance },  // Provide the already initialized instance
+        {
+          provide: HTTP_INTERCEPTORS,
+          useClass: MsalInterceptor,    // MSAL token injection
+          multi: true,
+        },
+        // MSAL providers
+        { provide: MSAL_INSTANCE, useValue: msalInstance },
         { provide: MSAL_GUARD_CONFIG, useFactory: msalGuardConfigFactory },
         { provide: MSAL_INTERCEPTOR_CONFIG, useFactory: msalInterceptorConfigFactory },
         MsalService,

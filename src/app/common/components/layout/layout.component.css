@@ -1,0 +1,18 @@
+.sidebar {
+  width: 60px; /* collapsed width */
+  transition: width 0.3s ease;
+  overflow: hidden;
+}
+
+.sidebar-expanded {
+  width: 220px; /* expanded width */
+}
+
+.sidebar-collapsed {
+  width: 60px; /* collapsed width */
+}
+
+/* Hide text when collapsed */
+.sidebar-collapsed .sidebar-text {
+  display: none;
+}
