@@ -4,9 +4,13 @@
   <!-- Header -->
   <header class="bg-primary text-white p-3 d-flex justify-content-between align-items-center">
     <h5 class="mb-0">CampusOrbit</h5>
-    <h6>{{loggedInUser()?.fullName}}</h6>
-    <h6>{{loggedInUser()?.enrollmentNumber}}</h6>
-    <button class="btn btn-light btn-sm" (click)="this.userService.logout();">Logout</button>
+    <div class="d-flex flex-column align-items-end">
+      @if (loggedInUser()) {
+        <h6 class="mb-0">{{ loggedInUser()?.fullName }}</h6>
+        <h6 class="mb-0">{{ loggedInUser()?.enrollmentNumber }}</h6>
+      }
+      <button class="btn btn-light btn-sm mt-1" (click)="userService.logout()">Logout</button>
+    </div>
   </header>
 
   <!-- Body -->
@@ -18,24 +22,43 @@
          [class.sidebar-expanded]="sidebarExpanded()"
          [class.sidebar-collapsed]="!sidebarExpanded()">
       <ul class="nav flex-column">
-        <li class="nav-item mb-2">
-          <a class="nav-link" routerLink="/dashboard">
-            <i class="bi bi-speedometer2"></i>
-            <span class="sidebar-text">Dashboard</span>
-          </a>
-        </li>
-        <li class="nav-item mb-2">
-          <a class="nav-link" routerLink="/users">
-            <i class="bi bi-people"></i>
-            <span class="sidebar-text">Users</span>
-          </a>
-        </li>
-        <li class="nav-item mb-2">
-          <a class="nav-link" routerLink="/settings">
-            <i class="bi bi-gear"></i>
-            <span class="sidebar-text">Settings</span>
-          </a>
-        </li>
+        @for (module of sidebarData(); track module.moduleId) {
+          <li class="nav-item mb-2">
+            <div class="nav-link fw-bold d-flex justify-content-between align-items-center"
+                 (click)="toggleModule(module.moduleId)">
+              <div class="d-flex align-items-center flex-nowrap">
+                <i class="{{ module.cssIcon }}"></i>
+                <span class="sidebar-text ms-2"
+                      [class.opacity-0]="!sidebarExpanded()"
+                      [class.opacity-100]="sidebarExpanded()"
+                      [class.pe-none]="!sidebarExpanded()">
+                  {{ module.displayName }}
+                </span>
+              </div>
+              @if (sidebarExpanded()) {
+                <i class="bi"
+                   [class.bi-chevron-down]="activeModuleId() === module.moduleId"
+                   [class.bi-chevron-right]="activeModuleId() !== module.moduleId"></i>
+              }
+            </div>
+
+            @if (activeModuleId() === module.moduleId && sidebarExpanded()) {
+  <ul class="nav flex-column ms-3 mt-1">
+    @for (route of module.routes; track route.path) {
+      <li class="nav-item mb-1">
+        <a class="nav-link" [routerLink]="route.path">
+          <span class="sidebar-text text-truncate d-inline-block w-100"
+                [attr.title]="route.displayName">
+            {{ route.displayName }}
+          </span>
+        </a>
+      </li>
+    }
+  </ul>
+}
+
+          </li>
+        }
       </ul>
     </nav>
 

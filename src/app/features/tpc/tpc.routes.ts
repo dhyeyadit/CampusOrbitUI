@@ -12,4 +12,36 @@ export const tpcRoutes: Routes = [
       ),
       canActivate: [MsalGuard],
   },
+  {
+    path: 'company',
+    loadComponent: () =>
+      import('../shared/views/company/company.component').then(
+        (m) => m.CompanyComponent
+      ),
+      canActivate: [MsalGuard],
+  },
+  {
+    path: 'campus-drives',
+    loadComponent: () =>
+      import('../shared/views/campus-drives/campus-drives.component').then(
+        (m) => m.CampusDrivesComponent
+      ),
+      canActivate: [MsalGuard],
+  },
+  {
+    path: 'study-material',
+    loadComponent: () =>
+      import('../shared/views/study-material/study-material.component').then(
+        (m) => m.StudyMaterialComponent
+      ),
+      canActivate: [MsalGuard],
+  },
+  {
+    path: 'manage-students',
+    loadComponent: () =>
+      import('../shared/views/manage-students/manage-students.component').then(
+        (m) => m.ManageStudentsComponent
+      ),
+      canActivate: [MsalGuard],
+  },
 ];
