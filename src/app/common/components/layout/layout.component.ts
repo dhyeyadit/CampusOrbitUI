@@ -16,17 +16,9 @@ export class LayoutComponent {
   // Use signal for sidebar state
   userService=inject(UserService)
   sidebarExpanded = signal(false);
-  loggedInUser=signal<User|null>(null);
-  ngOnInit(){
-    this.userService.getUser$().subscribe({
-      next:(res)=>{
-        this.loggedInUser.set(res.data);
-      },
-      error:(err)=>{
-        console.error(err)
-      }
-    })
-  }
+  loggedInUser = this.userService.user;
+
+  
   toggleSidebar(expand: boolean) {
     this.sidebarExpanded.set(expand);
   }
