@@ -1,0 +1,70 @@
+<div class="date-picker-wrapper">
+  <!-- Input Field - Matching Dropdown Style -->
+  <div class="date-input-group" 
+       [class.focused]="isFocused()" 
+       [class.disabled]="disabled()"
+       [class.invalid]="isInvalid()"
+       [class.valid]="isValid()"
+       [class.has-value]="hasValue()">
+    
+    <i class="bi bi-calendar3 date-icon"></i>
+    
+    <!-- Readonly input that looks like a dropdown -->
+    <input
+      type="text"
+      class="date-input"
+      [value]="formattedDate()"
+      [disabled]="disabled()"
+      [placeholder]="placeholder()"
+      (focus)="onFocus()"
+      (blur)="onBlur()"
+      (click)="openCalendar()"
+      readonly
+    />
+    
+    <!-- Clear Button (matches dropdown clear style) -->
+    <button 
+      *ngIf="hasValue() && !disabled()" 
+      type="button" 
+      class="clear-btn"
+      (click)="clearDate($event)"
+      (mousedown)="$event.preventDefault()"
+      tabindex="-1"
+      aria-label="Clear date"
+    >
+      <i class="bi bi-x-lg"></i>
+    </button>
+    
+    <!-- Calendar Toggle Button (matches dropdown chevron) -->
+    <button 
+      type="button" 
+      class="calendar-toggle-btn"
+      [disabled]="disabled()"
+      (click)="openCalendar()"
+      (mousedown)="$event.preventDefault()"
+      tabindex="-1"
+      aria-label="Open calendar"
+    >
+      <i class="bi" [class.bi-chevron-down]="!isCalendarOpen()" [class.bi-chevron-up]="isCalendarOpen()"></i>
+    </button>
+  </div>
+  
+  <!-- Calendar Overlay (same as before) -->
+  <div class="calendar-dropdown" [class.show]="isCalendarOpen()" (click)="closeCalendar()">
+    <div class="calendar-container" (click)="$event.stopPropagation()">
+      <!-- ... rest of calendar content ... -->
+    </div>
+  </div>
+  
+  <!-- Validation Message -->
+  <div class="validation-message" *ngIf="showValidation()">
+    <span class="error-message" *ngIf="errorMessage()">
+      <i class="bi bi-exclamation-circle"></i>
+      {{ errorMessage() }}
+    </span>
+    <span class="success-message" *ngIf="successMessage() && !errorMessage()">
+      <i class="bi bi-check-circle"></i>
+      {{ successMessage() }}
+    </span>
+  </div>
+</div>

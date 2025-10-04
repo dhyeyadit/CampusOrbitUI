@@ -1,0 +1,242 @@
+.date-picker-wrapper {
+  width: 100%;
+  position: relative;
+}
+
+/* Make date input group match dropdown style */
+.date-input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+  gap: 0.75rem;
+  cursor: pointer;
+  min-height: 48px; /* Match dropdown height */
+}
+
+.date-input-group:hover:not(.disabled) {
+  border-color: #cbd5e1;
+}
+
+.date-input-group.focused {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.date-input-group.disabled {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.date-input-group.invalid {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.date-input-group.valid {
+  border-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+/* Icon styling to match other icons */
+.date-icon {
+  color: #64748b;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  transition: color 0.3s ease;
+}
+
+.date-input-group.focused .date-icon {
+  color: #3b82f6;
+}
+
+.date-input-group.invalid .date-icon {
+  color: #ef4444;
+}
+
+.date-input-group.valid .date-icon {
+  color: #10b981;
+}
+
+/* Input styling to match dropdown text */
+.date-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.95rem;
+  color: #1e293b;
+  font-family: inherit;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  cursor: pointer;
+  font-weight: 400; /* Match dropdown text weight */
+}
+
+.date-input::placeholder {
+  color: #94a3b8;
+  font-weight: 400;
+}
+
+.date-input:disabled {
+  cursor: not-allowed;
+  color: #94a3b8;
+}
+
+/* Clear button - match dropdown style */
+.clear-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: #f1f5f9;
+  border-radius: 50%;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  font-size: 0.75rem;
+}
+
+.clear-btn:hover {
+  background: #e2e8f0;
+  color: #475569;
+  transform: scale(1.1);
+}
+
+.clear-btn:active {
+  transform: scale(0.95);
+}
+
+/* Calendar toggle button - match dropdown chevron */
+.calendar-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  border-radius: 4px;
+}
+
+.calendar-toggle-btn:hover:not(:disabled) {
+  background: #f1f5f9;
+  color: #3b82f6;
+}
+
+.calendar-toggle-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.calendar-toggle-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+/* Make placeholder text match dropdown placeholder */
+.date-input-group:not(.has-value) .date-input {
+  color: #94a3b8;
+}
+
+.date-input-group.has-value .date-input {
+  color: #1e293b;
+  font-weight: 500;
+}
+
+/* Calendar dropdown styles (keep your existing calendar styles) */
+.calendar-dropdown {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.calendar-dropdown.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.calendar-container {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  max-width: 320px;
+  width: 90vw;
+  animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+.calendar-dropdown.show .calendar-container {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Validation message styling */
+.validation-message {
+  margin-top: 0.5rem;
+  min-height: 1.25rem;
+}
+
+.error-message,
+.success-message {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.error-message {
+  color: #ef4444;
+}
+
+.success-message {
+  color: #10b981;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .date-input-group {
+    padding: 0.625rem 0.875rem;
+    min-height: 44px;
+  }
+  
+  .date-input {
+    font-size: 0.9rem;
+  }
+}

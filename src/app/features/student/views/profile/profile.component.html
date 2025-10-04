@@ -1,1 +1,553 @@
-<p>profile works!</p>
+<div class="form-container">
+  <div class="form-header">
+    <h2 class="form-title">Student Profile</h2>
+    <p class="form-subtitle">Complete your profile information for placement registration</p>
+  </div>
+
+  <form [formGroup]="studentForm" (ngSubmit)="onSubmit()" class="student-form">
+
+    <!-- Basic Information Accordion -->
+    <div class="accordion-section" *ngFor="let section of accordionSections">
+      <div class="accordion-header" (click)="toggleAccordion(section.id)" [class.expanded]="section.expanded">
+        <div class="accordion-title">
+          <i class="bi {{ section.icon }}"></i>
+          <span>{{ section.title }}</span>
+        </div>
+        <i class="bi bi-chevron-down accordion-chevron" [class.rotated]="section.expanded"></i>
+      </div>
+
+      <div class="accordion-content" [class.expanded]="section.expanded">
+
+        <!-- Basic Information Section -->
+        <div *ngIf="section.id === 'basic'" class="form-grid">
+          <div class="form-group full-width">
+            <label class="form-label">
+              Enrollment Number <span class="required">*</span>
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="enrollmentNumber"
+              [class.invalid]="isFieldInvalid('enrollmentNumber')"
+              placeholder="Enter enrollment number"
+            />
+            <span class="error-message" *ngIf="isFieldInvalid('enrollmentNumber')">
+              {{ getErrorMessage('enrollmentNumber') }}
+            </span>
+          </div>
+
+          <div class="form-group full-width">
+            <label class="form-label toggle-label">
+              <span>Interested for Placement</span>
+              <div class="toggle-switch">
+                <input
+                  type="checkbox"
+                  class="toggle-input"
+                  formControlName="interestedForPlacement"
+                  id="interestedForPlacement"
+                />
+                <label for="interestedForPlacement" class="toggle-slider"></label>
+              </div>
+            </label>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              First Name <span class="required">*</span>
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="firstName"
+              [class.invalid]="isFieldInvalid('firstName')"
+              placeholder="Enter first name"
+            />
+            <span class="error-message" *ngIf="isFieldInvalid('firstName')">
+              {{ getErrorMessage('firstName') }}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Middle Name</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="middleName"
+              placeholder="Enter middle name"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              Last Name <span class="required">*</span>
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="lastName"
+              [class.invalid]="isFieldInvalid('lastName')"
+              placeholder="Enter last name"
+            />
+            <span class="error-message" *ngIf="isFieldInvalid('lastName')">
+              {{ getErrorMessage('lastName') }}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              Personal Email <span class="required">*</span>
+            </label>
+            <input
+              type="email"
+              class="form-control"
+              formControlName="personalMail"
+              [class.invalid]="isFieldInvalid('personalMail')"
+              placeholder="Enter email address"
+            />
+            <span class="error-message" *ngIf="isFieldInvalid('personalMail')">
+              {{ getErrorMessage('personalMail') }}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              Branch <span class="required">*</span>
+            </label>
+            <select
+              class="form-control"
+              formControlName="branch"
+              [class.invalid]="isFieldInvalid('branch')"
+            >
+              <option value="">Select branch</option>
+              <option *ngFor="let branch of branches" [value]="branch">{{ branch }}</option>
+            </select>
+            <span class="error-message" *ngIf="isFieldInvalid('branch')">
+              {{ getErrorMessage('branch') }}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              Gender <span class="required">*</span>
+            </label>
+            <select
+              class="form-control"
+              formControlName="gender"
+              [class.invalid]="isFieldInvalid('gender')"
+            >
+              <option value="">Select gender</option>
+              <option *ngFor="let gender of genders" [value]="gender">{{ gender }}</option>
+            </select>
+            <span class="error-message" *ngIf="isFieldInvalid('gender')">
+              {{ getErrorMessage('gender') }}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              Medium of Education <span class="required">*</span>
+            </label>
+            <select
+              class="form-control"
+              formControlName="mediumOfEducation"
+              [class.invalid]="isFieldInvalid('mediumOfEducation')"
+            >
+              <option value="">Select medium</option>
+              <option *ngFor="let medium of educationMediums" [value]="medium">{{ medium }}</option>
+            </select>
+            <span class="error-message" *ngIf="isFieldInvalid('mediumOfEducation')">
+              {{ getErrorMessage('mediumOfEducation') }}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              Board of Education <span class="required">*</span>
+            </label>
+            <select
+              class="form-control"
+              formControlName="boardOfEducation"
+              [class.invalid]="isFieldInvalid('boardOfEducation')"
+            >
+              <option value="">Select board</option>
+              <option *ngFor="let board of boards" [value]="board">{{ board }}</option>
+            </select>
+            <span class="error-message" *ngIf="isFieldInvalid('boardOfEducation')">
+              {{ getErrorMessage('boardOfEducation') }}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              Date of Birth <span class="required">*</span>
+            </label>
+            <app-date-picker
+              formControlName="dateOfBirth"
+              placeholder="Select date of birth"
+            ></app-date-picker>
+            <span class="error-message" *ngIf="isFieldInvalid('dateOfBirth')">
+              {{ getErrorMessage('dateOfBirth') }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Contact Information Section -->
+        <div *ngIf="section.id === 'contact'" class="form-grid">
+          <div class="form-group">
+            <label class="form-label">
+              Phone Number <span class="required">*</span>
+            </label>
+            <input
+              type="tel"
+              class="form-control"
+              formControlName="phoneNumber"
+              [class.invalid]="isFieldInvalid('phoneNumber')"
+              placeholder="Enter 10 digit phone number"
+              maxlength="10"
+            />
+            <span class="error-message" *ngIf="isFieldInvalid('phoneNumber')">
+              {{ getErrorMessage('phoneNumber') }}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Alternate Phone Number</label>
+            <input
+              type="tel"
+              class="form-control"
+              formControlName="alternatePhoneNumber"
+              [class.invalid]="isFieldInvalid('alternatePhoneNumber')"
+              placeholder="Enter 10 digit phone number"
+              maxlength="10"
+            />
+            <span class="error-message" *ngIf="isFieldInvalid('alternatePhoneNumber')">
+              {{ getErrorMessage('alternatePhoneNumber') }}
+            </span>
+          </div>
+
+          <div class="form-group full-width">
+            <label class="form-label">
+              Address <span class="required">*</span>
+            </label>
+            <textarea
+              class="form-control"
+              formControlName="address"
+              [class.invalid]="isFieldInvalid('address')"
+              placeholder="Enter complete address"
+              rows="3"
+            ></textarea>
+            <span class="error-message" *ngIf="isFieldInvalid('address')">
+              {{ getErrorMessage('address') }}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              City <span class="required">*</span>
+            </label>
+            <select
+              class="form-control"
+              formControlName="city"
+              [class.invalid]="isFieldInvalid('city')"
+            >
+              <option value="">Select city</option>
+              <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+            </select>
+            <span class="error-message" *ngIf="isFieldInvalid('city')">
+              {{ getErrorMessage('city') }}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              State <span class="required">*</span>
+            </label>
+            <select
+              class="form-control"
+              formControlName="state"
+              [class.invalid]="isFieldInvalid('state')"
+            >
+              <option value="">Select state</option>
+              <option *ngFor="let state of states" [value]="state">{{ state }}</option>
+            </select>
+            <span class="error-message" *ngIf="isFieldInvalid('state')">
+              {{ getErrorMessage('state') }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Academic Information Section -->
+        <div *ngIf="section.id === 'academic'" class="form-grid">
+          <div class="form-group">
+            <label class="form-label">
+              SSC Percentage <span class="required">*</span>
+            </label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="sscPercentage"
+              [class.invalid]="isFieldInvalid('sscPercentage')"
+              placeholder="Enter percentage"
+              step="0.01"
+              min="0"
+              max="100"
+            />
+            <span class="error-message" *ngIf="isFieldInvalid('sscPercentage')">
+              {{ getErrorMessage('sscPercentage') }}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">HSC Percentage</label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="hscPercentage"
+              [class.invalid]="isFieldInvalid('hscPercentage')"
+              placeholder="Enter percentage"
+              step="0.01"
+              min="0"
+              max="100"
+            />
+            <span class="error-message" *ngIf="isFieldInvalid('hscPercentage')">
+              {{ getErrorMessage('hscPercentage') }}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Diploma Percentage</label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="diplomaPercentage"
+              [class.invalid]="isFieldInvalid('diplomaPercentage')"
+              placeholder="Enter percentage"
+              step="0.01"
+              min="0"
+              max="100"
+            />
+            <span class="error-message" *ngIf="isFieldInvalid('diplomaPercentage')">
+              {{ getErrorMessage('diplomaPercentage') }}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              Current Backlogs <span class="required">*</span>
+            </label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="currentBacklogs"
+              [class.invalid]="isFieldInvalid('currentBacklogs')"
+              placeholder="Enter number"
+              min="0"
+            />
+            <span class="error-message" *ngIf="isFieldInvalid('currentBacklogs')">
+              {{ getErrorMessage('currentBacklogs') }}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              Dead Backlogs <span class="required">*</span>
+            </label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="deadBacklogs"
+              [class.invalid]="isFieldInvalid('deadBacklogs')"
+              placeholder="Enter number"
+              min="0"
+            />
+            <span class="error-message" *ngIf="isFieldInvalid('deadBacklogs')">
+              {{ getErrorMessage('deadBacklogs') }}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              CGPA (Latest) <span class="required">*</span>
+            </label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="cgpa"
+              [class.invalid]="isFieldInvalid('cgpa')"
+              placeholder="Enter CGPA"
+              step="0.01"
+              min="0"
+              max="10"
+            />
+            <span class="error-message" *ngIf="isFieldInvalid('cgpa')">
+              {{ getErrorMessage('cgpa') }}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              Current Semester <span class="required">*</span>
+            </label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="currentSemester"
+              [class.invalid]="isFieldInvalid('currentSemester')"
+              placeholder="Enter semester (1-8)"
+              min="1"
+              max="8"
+            />
+            <span class="error-message" *ngIf="isFieldInvalid('currentSemester')">
+              {{ getErrorMessage('currentSemester') }}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              Current Year <span class="required">*</span>
+            </label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="currentYear"
+              [class.invalid]="isFieldInvalid('currentYear')"
+              placeholder="Enter year (1-4)"
+              min="1"
+              max="4"
+            />
+            <span class="error-message" *ngIf="isFieldInvalid('currentYear')">
+              {{ getErrorMessage('currentYear') }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Semester Performance Section -->
+        <div *ngIf="section.id === 'semester'" class="form-grid">
+          <div class="form-group" *ngFor="let sem of [1, 2, 3, 4, 5, 6, 7]">
+            <label class="form-label">Semester {{ sem }} SPI</label>
+            <input
+              type="number"
+              class="form-control"
+              [formControlName]="'sem' + sem + 'SPI'"
+              [class.invalid]="isFieldInvalid('sem' + sem + 'SPI')"
+              placeholder="Enter SPI"
+              step="0.01"
+              min="0"
+              max="10"
+            />
+            <span class="error-message" *ngIf="isFieldInvalid('sem' + sem + 'SPI')">
+              {{ getErrorMessage('sem' + sem + 'SPI') }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Documents Section -->
+        <div *ngIf="section.id === 'documents'" class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Resume</label>
+            <div class="file-upload">
+              <input
+                type="file"
+                class="file-input"
+                (change)="onFileSelect($event, 'resume')"
+                accept=".pdf,.doc,.docx"
+                id="resume"
+              />
+              <label for="resume" class="file-label">
+                <i class="bi bi-cloud-upload"></i>
+                <span>{{ getFileName('resume') }}</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">SSC Marksheet</label>
+            <div class="file-upload">
+              <input
+                type="file"
+                class="file-input"
+                (change)="onFileSelect($event, 'sscMarksheet')"
+                accept=".pdf,.jpg,.jpeg,.png"
+                id="sscMarksheet"
+              />
+              <label for="sscMarksheet" class="file-label">
+                <i class="bi bi-cloud-upload"></i>
+                <span>{{ getFileName('sscMarksheet') }}</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">HSC Marksheet</label>
+            <div class="file-upload">
+              <input
+                type="file"
+                class="file-input"
+                (change)="onFileSelect($event, 'hscMarksheet')"
+                accept=".pdf,.jpg,.jpeg,.png"
+                id="hscMarksheet"
+              />
+              <label for="hscMarksheet" class="file-label">
+                <i class="bi bi-cloud-upload"></i>
+                <span>{{ getFileName('hscMarksheet') }}</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Diploma Certificate</label>
+            <div class="file-upload">
+              <input
+                type="file"
+                class="file-input"
+                (change)="onFileSelect($event, 'diplomaCertificate')"
+                accept=".pdf,.jpg,.jpeg,.png"
+                id="diplomaCertificate"
+              />
+              <label for="diplomaCertificate" class="file-label">
+                <i class="bi bi-cloud-upload"></i>
+                <span>{{ getFileName('diplomaCertificate') }}</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group" *ngFor="let sem of [1, 2, 3, 4, 5, 6, 7]">
+            <label class="form-label">Semester {{ sem }} Marksheet</label>
+            <div class="file-upload">
+              <input
+                type="file"
+                class="file-input"
+                (change)="onFileSelect($event, 'sem' + sem + 'Marksheet')"
+                accept=".pdf,.jpg,.jpeg,.png"
+                [id]="'sem' + sem + 'Marksheet'"
+              />
+              <label [for]="'sem' + sem + 'Marksheet'" class="file-label">
+                <i class="bi bi-cloud-upload"></i>
+                <span>{{ getFileName('sem' + sem + 'Marksheet') }}</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="form-actions">
+      <button type="button" class="btn btn-secondary" (click)="onReset()">
+        <i class="bi bi-arrow-counterclockwise"></i>
+        Reset Form
+      </button>
+      <button type="submit" class="btn btn-primary" [disabled]="isSubmitting()">
+        <span *ngIf="!isSubmitting()">
+          <i class="bi bi-check-circle"></i>
+          Submit Profile
+        </span>
+        <span *ngIf="isSubmitting()">
+          <span class="spinner-border spinner-border-sm me-2"></span>
+          Submitting...
+        </span>
+      </button>
+    </div>
+  </form>
+</div>
