@@ -136,18 +136,20 @@
                                     </div>
 
                                     <div class="col-md-6">
-  <label for="branch" class="form-label">
-    <i class="bi bi-diagram-3 text-primary me-1"></i>
-    Branch <span class="text-danger">*</span>
-  </label>
-  <select class="form-select" id="branch" formControlName="branch" [class.is-invalid]="shouldShowError('branch')">
-    <option value="">Select Branch</option>
-    <option *ngFor="let branch of branches" [value]="branch">{{ branch }}</option>
-  </select>
-  <div class="invalid-feedback" *ngIf="shouldShowError('branch')">
-    <i class="bi bi-exclamation-circle me-1"></i>Branch is required
-  </div>
-</div>
+                                        <label for="branch" class="form-label">
+                                            <i class="bi bi-diagram-3 text-primary me-1"></i>
+                                            Branch <span class="text-danger">*</span>
+                                        </label>
+                                        <select class="form-select" id="branch" formControlName="branch"
+                                            [class.is-invalid]="shouldShowError('branch')">
+                                            <option value="">Select Branch</option>
+                                            <option *ngFor="let branch of branches" [value]="branch">{{ branch }}
+                                            </option>
+                                        </select>
+                                        <div class="invalid-feedback" *ngIf="shouldShowError('branch')">
+                                            <i class="bi bi-exclamation-circle me-1"></i>Branch is required
+                                        </div>
+                                    </div>
 
 
                                     <div class="col-md-6">

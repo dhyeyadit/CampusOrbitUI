@@ -30,7 +30,7 @@ export class ProfileComponent {
   states = ['Gujarat', 'Maharashtra', 'Rajasthan', 'Delhi', 'Karnataka', 'Other'];
   cities = ['Ahmedabad', 'Surat', 'Vadodara', 'Rajkot', 'Mumbai', 'Other'];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -108,7 +108,7 @@ export class ProfileComponent {
       const file = input.files[0];
       this.studentForm.patchValue({ [controlName]: file });
       this.fileNames[controlName] = file.name;
-      
+
       // Mark as touched to trigger validation
       this.studentForm.get(controlName)?.markAsTouched();
     }
@@ -117,10 +117,10 @@ export class ProfileComponent {
   removeFile(controlName: string, event: Event): void {
     event.preventDefault();
     event.stopPropagation();
-    
+
     this.studentForm.patchValue({ [controlName]: null });
     delete this.fileNames[controlName];
-    
+
     // Reset the file input
     const fileInput = document.getElementById(controlName) as HTMLInputElement;
     if (fileInput) {
