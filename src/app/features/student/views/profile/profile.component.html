@@ -1,770 +1,894 @@
 <div class="container mt-5 mb-5">
-  <div class="card shadow-lg">
-    <div class="card-header bg-gradient text-white">
-      <div class="d-flex align-items-center">
-        <i class="bi bi-person-circle fs-3 me-3"></i>
-        <h3 class="mb-0 text text-black">Student Profile Form</h3>
-      </div>
-    </div>
-    <div class="card-body p-4">
-      <form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
-        
-        <!-- Accordion -->
-        <div class="accordion accordion-flush" id="studentProfileAccordion">
-          
-          <!-- Basic Information -->
-          <div class="accordion-item mb-3 border rounded shadow-sm">
-            <h2 class="accordion-header" id="headingBasic">
-              <button class="accordion-button rounded-top" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBasic" aria-expanded="true" aria-controls="collapseBasic">
-                <i class="bi bi-person-badge me-2 fs-5"></i>
-                <span class="fw-bold">Basic Information</span>
-              </button>
-            </h2>
-            <div id="collapseBasic" class="accordion-collapse collapse show" aria-labelledby="headingBasic">
-              <div class="accordion-body bg-light">
-                <div class="row g-3">
-                  
-                  <div class="col-md-6">
-                    <label for="enrollmentNumber" class="form-label">
-                      <i class="bi bi-hash text-primary me-1"></i>
-                      Enrollment Number <span class="text-danger">*</span>
-                    </label>
-                    <input type="text" class="form-control form-control-lg" id="enrollmentNumber" formControlName="enrollmentNumber" placeholder="Enter enrollment number"
-                           [class.is-invalid]="shouldShowError('enrollmentNumber')">
-                    <div class="invalid-feedback" *ngIf="shouldShowError('enrollmentNumber')">
-                      <i class="bi bi-exclamation-circle me-1"></i>
-                      <span *ngIf="studentForm.get('enrollmentNumber')?.errors?.['required']">Enrollment number is required</span>
-                      <span *ngIf="studentForm.get('enrollmentNumber')?.errors?.['pattern']">Only uppercase letters and numbers allowed</span>
-                    </div>
-                  </div>
-
-                  <div class="col-md-6">
-                    <label class="form-label">
-                      <i class="bi bi-briefcase text-primary me-1"></i>
-                      Interested for Placement
-                    </label>
-                    <div class="form-check form-switch mt-2">
-                      <input class="form-check-input" type="checkbox" role="switch" id="interestedForPlacement" formControlName="interestedForPlacement" style="width: 3rem; height: 1.5rem;">
-                      <label class="form-check-label ms-2 fs-5" for="interestedForPlacement">
-                        <span class="badge" [class.bg-success]="studentForm.get('interestedForPlacement')?.value" [class.bg-secondary]="!studentForm.get('interestedForPlacement')?.value">
-                          {{ studentForm.get('interestedForPlacement')?.value ? 'Yes' : 'No' }}
-                        </span>
-                      </label>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                    <label for="firstName" class="form-label">
-                      <i class="bi bi-person text-primary me-1"></i>
-                      First Name <span class="text-danger">*</span>
-                    </label>
-                    <input type="text" class="form-control" id="firstName" formControlName="firstName" placeholder="First name"
-                           [class.is-invalid]="shouldShowError('firstName')">
-                    <div class="invalid-feedback" *ngIf="shouldShowError('firstName')">
-                      <i class="bi bi-exclamation-circle me-1"></i>
-                      <span *ngIf="studentForm.get('firstName')?.errors?.['required']">First name is required</span>
-                      <span *ngIf="studentForm.get('firstName')?.errors?.['minlength']">Minimum 2 characters required</span>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                    <label for="middleName" class="form-label">
-                      <i class="bi bi-person text-primary me-1"></i>
-                      Middle Name
-                    </label>
-                    <input type="text" class="form-control" id="middleName" formControlName="middleName" placeholder="Middle name">
-                  </div>
-
-                  <div class="col-md-4">
-                    <label for="lastName" class="form-label">
-                      <i class="bi bi-person text-primary me-1"></i>
-                      Last Name <span class="text-danger">*</span>
-                    </label>
-                    <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="Last name"
-                           [class.is-invalid]="shouldShowError('lastName')">
-                    <div class="invalid-feedback" *ngIf="shouldShowError('lastName')">
-                      <i class="bi bi-exclamation-circle me-1"></i>
-                      <span *ngIf="studentForm.get('lastName')?.errors?.['required']">Last name is required</span>
-                      <span *ngIf="studentForm.get('lastName')?.errors?.['minlength']">Minimum 2 characters required</span>
-                    </div>
-                  </div>
-
-                  <div class="col-md-6">
-                    <label for="personalMail" class="form-label">
-                      <i class="bi bi-envelope text-primary me-1"></i>
-                      Personal Email <span class="text-danger">*</span>
-                    </label>
-                    <input type="email" class="form-control" id="personalMail" formControlName="personalMail" placeholder="example@email.com"
-                           [class.is-invalid]="shouldShowError('personalMail')">
-                    <div class="invalid-feedback" *ngIf="shouldShowError('personalMail')">
-                      <i class="bi bi-exclamation-circle me-1"></i>
-                      <span *ngIf="studentForm.get('personalMail')?.errors?.['required']">Email is required</span>
-                      <span *ngIf="studentForm.get('personalMail')?.errors?.['email']">Valid email is required</span>
-                    </div>
-                  </div>
-
-                  <div class="col-md-6">
-                    <label for="dateOfBirth" class="form-label">
-                      <i class="bi bi-calendar-event text-primary me-1"></i>
-                      Date of Birth <span class="text-danger">*</span>
-                    </label>
-                    <input type="date" class="form-control" id="dateOfBirth" formControlName="dateOfBirth"
-                           [class.is-invalid]="shouldShowError('dateOfBirth')">
-                    <div class="invalid-feedback" *ngIf="shouldShowError('dateOfBirth')">
-                      <i class="bi bi-exclamation-circle me-1"></i>Date of birth is required
-                    </div>
-                  </div>
-
-                  <div class="col-md-6">
-                    <label for="branch" class="form-label">
-                      <i class="bi bi-diagram-3 text-primary me-1"></i>
-                      Branch <span class="text-danger">*</span>
-                    </label>
-                    <select class="form-select" id="branch" formControlName="branch"
-                            [class.is-invalid]="shouldShowError('branch')">
-                      <option value="">Select Branch</option>
-                      <option *ngFor="let branch of branches" [value]="branch">{{ branch }}</option>
-                    </select>
-                    <div class="invalid-feedback" *ngIf="shouldShowError('branch')">
-                      <i class="bi bi-exclamation-circle me-1"></i>Branch is required
-                    </div>
-                  </div>
-
-                  <div class="col-md-6">
-                    <label for="gender" class="form-label">
-                      <i class="bi bi-gender-ambiguous text-primary me-1"></i>
-                      Gender <span class="text-danger">*</span>
-                    </label>
-                    <select class="form-select" id="gender" formControlName="gender"
-                            [class.is-invalid]="shouldShowError('gender')">
-                      <option value="">Select Gender</option>
-                      <option *ngFor="let gender of genders" [value]="gender">{{ gender }}</option>
-                    </select>
-                    <div class="invalid-feedback" *ngIf="shouldShowError('gender')">
-                      <i class="bi bi-exclamation-circle me-1"></i>Gender is required
-                    </div>
-                  </div>
-
-                  <div class="col-md-6">
-                    <label for="mediumOfEducation" class="form-label">
-                      <i class="bi bi-book text-primary me-1"></i>
-                      Medium of Education <span class="text-danger">*</span>
-                    </label>
-                    <select class="form-select" id="mediumOfEducation" formControlName="mediumOfEducation"
-                            [class.is-invalid]="shouldShowError('mediumOfEducation')">
-                      <option value="">Select Medium</option>
-                      <option *ngFor="let medium of mediums" [value]="medium">{{ medium }}</option>
-                    </select>
-                    <div class="invalid-feedback" *ngIf="shouldShowError('mediumOfEducation')">
-                      <i class="bi bi-exclamation-circle me-1"></i>Medium of education is required
-                    </div>
-                  </div>
-
-                  <div class="col-md-6">
-                    <label for="boardOfEducation" class="form-label">
-                      <i class="bi bi-bank text-primary me-1"></i>
-                      Board of Education <span class="text-danger">*</span>
-                    </label>
-                    <select class="form-select" id="boardOfEducation" formControlName="boardOfEducation"
-                            [class.is-invalid]="shouldShowError('boardOfEducation')">
-                      <option value="">Select Board</option>
-                      <option *ngFor="let board of boards" [value]="board">{{ board }}</option>
-                    </select>
-                    <div class="invalid-feedback" *ngIf="shouldShowError('boardOfEducation')">
-                      <i class="bi bi-exclamation-circle me-1"></i>Board of education is required
-                    </div>
-                  </div>
-
-                  <div class="col-md-6">
-                    <label for="phoneNumber" class="form-label">
-                      <i class="bi bi-phone text-primary me-1"></i>
-                      Phone Number <span class="text-danger">*</span>
-                    </label>
-                    <input type="tel" class="form-control" id="phoneNumber" formControlName="phoneNumber" placeholder="10-digit phone number"
-                           [class.is-invalid]="shouldShowError('phoneNumber')">
-                    <div class="invalid-feedback" *ngIf="shouldShowError('phoneNumber')">
-                      <i class="bi bi-exclamation-circle me-1"></i>
-                      <span *ngIf="studentForm.get('phoneNumber')?.errors?.['required']">Phone number is required</span>
-                      <span *ngIf="studentForm.get('phoneNumber')?.errors?.['pattern']">Valid 10-digit phone number is required</span>
-                    </div>
-                  </div>
-
-                  <div class="col-md-6">
-                    <label for="alternatePhoneNumber" class="form-label">
-                      <i class="bi bi-telephone text-primary me-1"></i>
-                      Alternate Phone Number
-                    </label>
-                    <input type="tel" class="form-control" id="alternatePhoneNumber" formControlName="alternatePhoneNumber" placeholder="10-digit phone number"
-                           [class.is-invalid]="shouldShowError('alternatePhoneNumber')">
-                    <div class="invalid-feedback" *ngIf="shouldShowError('alternatePhoneNumber')">
-                      <i class="bi bi-exclamation-circle me-1"></i>Valid 10-digit phone number required
-                    </div>
-                  </div>
-
-                </div>
-              </div>
+    <div class="card shadow-lg">
+        <div class="card-header bg-gradient text-white">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-person-circle fs-3 me-3"></i>
+                <h3 class="mb-0 text text-black">Student Profile Form</h3>
             </div>
-          </div>
-
-          <!-- Academic Records -->
-          <div class="accordion-item mb-3 border rounded shadow-sm">
-            <h2 class="accordion-header" id="headingAcademic">
-              <button class="accordion-button collapsed rounded-top" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAcademic" aria-expanded="false" aria-controls="collapseAcademic">
-                <i class="bi bi-mortarboard me-2 fs-5"></i>
-                <span class="fw-bold">Academic Records</span>
-              </button>
-            </h2>
-            <div id="collapseAcademic" class="accordion-collapse collapse" aria-labelledby="headingAcademic">
-              <div class="accordion-body bg-light">
-                <div class="row g-3">
-                  
-                  <div class="col-12">
-                    <div class="alert alert-info d-flex align-items-center">
-                      <i class="bi bi-info-circle-fill me-2 fs-5"></i>
-                      <strong>Previous Education</strong>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                    <label for="sscPercentage" class="form-label">
-                      <i class="bi bi-percent text-primary me-1"></i>
-                      SSC Percentage <span class="text-danger">*</span>
-                    </label>
-                    <div class="input-group">
-                      <input type="number" class="form-control" id="sscPercentage" formControlName="sscPercentage" step="0.01" placeholder="0.00"
-                             [class.is-invalid]="shouldShowError('sscPercentage')">
-                      <span class="input-group-text">%</span>
-                    </div>
-                    <div class="invalid-feedback" *ngIf="shouldShowError('sscPercentage')">
-                      <i class="bi bi-exclamation-circle me-1"></i>
-                      <span *ngIf="studentForm.get('sscPercentage')?.errors?.['required']">SSC percentage is required</span>
-                      <span *ngIf="studentForm.get('sscPercentage')?.errors?.['min']">Percentage must be at least 0</span>
-                      <span *ngIf="studentForm.get('sscPercentage')?.errors?.['max']">Percentage cannot exceed 100</span>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                    <label for="hscPercentage" class="form-label">
-                      <i class="bi bi-percent text-primary me-1"></i>
-                      HSC Percentage
-                    </label>
-                    <div class="input-group">
-                      <input type="number" class="form-control" id="hscPercentage" formControlName="hscPercentage" step="0.01" placeholder="0.00"
-                             [class.is-invalid]="shouldShowError('hscPercentage')">
-                      <span class="input-group-text">%</span>
-                    </div>
-                    <div class="invalid-feedback" *ngIf="shouldShowError('hscPercentage')">
-                      <i class="bi bi-exclamation-circle me-1"></i>
-                      <span *ngIf="studentForm.get('hscPercentage')?.errors?.['min']">Percentage must be at least 0</span>
-                      <span *ngIf="studentForm.get('hscPercentage')?.errors?.['max']">Percentage cannot exceed 100</span>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                    <label for="diplomaPercentage" class="form-label">
-                      <i class="bi bi-percent text-primary me-1"></i>
-                      Diploma Percentage
-                    </label>
-                    <div class="input-group">
-                      <input type="number" class="form-control" id="diplomaPercentage" formControlName="diplomaPercentage" step="0.01" placeholder="0.00"
-                             [class.is-invalid]="shouldShowError('diplomaPercentage')">
-                      <span class="input-group-text">%</span>
-                    </div>
-                    <div class="invalid-feedback" *ngIf="shouldShowError('diplomaPercentage')">
-                      <i class="bi bi-exclamation-circle me-1"></i>
-                      <span *ngIf="studentForm.get('diplomaPercentage')?.errors?.['min']">Percentage must be at least 0</span>
-                      <span *ngIf="studentForm.get('diplomaPercentage')?.errors?.['max']">Percentage cannot exceed 100</span>
-                    </div>
-                  </div>
-
-                  <div class="col-12 mt-4">
-                    <div class="alert alert-info d-flex align-items-center">
-                      <i class="bi bi-journal-check me-2 fs-5"></i>
-                      <strong>Current Academic Status</strong>
-                    </div>
-                  </div>
-
-                  <div class="col-md-3">
-                    <label for="currentSemester" class="form-label">
-                      <i class="bi bi-calendar3 text-primary me-1"></i>
-                      Current Semester <span class="text-danger">*</span>
-                    </label>
-                    <input type="number" class="form-control" id="currentSemester" formControlName="currentSemester" placeholder="1-8"
-                           [class.is-invalid]="shouldShowError('currentSemester')">
-                    <div class="invalid-feedback" *ngIf="shouldShowError('currentSemester')">
-                      <i class="bi bi-exclamation-circle me-1"></i>
-                      <span *ngIf="studentForm.get('currentSemester')?.errors?.['required']">Current semester is required</span>
-                      <span *ngIf="studentForm.get('currentSemester')?.errors?.['min']">Semester must be at least 1</span>
-                      <span *ngIf="studentForm.get('currentSemester')?.errors?.['max']">Semester cannot exceed 8</span>
-                    </div>
-                  </div>
-
-                  <div class="col-md-3">
-                    <label for="currentYear" class="form-label">
-                      <i class="bi bi-calendar2-week text-primary me-1"></i>
-                      Current Year <span class="text-danger">*</span>
-                    </label>
-                    <input type="number" class="form-control" id="currentYear" formControlName="currentYear" placeholder="1-4"
-                           [class.is-invalid]="shouldShowError('currentYear')">
-                    <div class="invalid-feedback" *ngIf="shouldShowError('currentYear')">
-                      <i class="bi bi-exclamation-circle me-1"></i>
-                      <span *ngIf="studentForm.get('currentYear')?.errors?.['required']">Current year is required</span>
-                      <span *ngIf="studentForm.get('currentYear')?.errors?.['min']">Year must be at least 1</span>
-                      <span *ngIf="studentForm.get('currentYear')?.errors?.['max']">Year cannot exceed 4</span>
-                    </div>
-                  </div>
-
-                  <div class="col-md-3">
-                    <label for="currentBacklogs" class="form-label">
-                      <i class="bi bi-exclamation-triangle text-warning me-1"></i>
-                      Current Backlogs <span class="text-danger">*</span>
-                    </label>
-                    <input type="number" class="form-control" id="currentBacklogs" formControlName="currentBacklogs" placeholder="0"
-                           [class.is-invalid]="shouldShowError('currentBacklogs')">
-                    <div class="invalid-feedback" *ngIf="shouldShowError('currentBacklogs')">
-                      <i class="bi bi-exclamation-circle me-1"></i>
-                      <span *ngIf="studentForm.get('currentBacklogs')?.errors?.['required']">Current backlogs is required</span>
-                      <span *ngIf="studentForm.get('currentBacklogs')?.errors?.['min']">Backlogs cannot be negative</span>
-                    </div>
-                  </div>
-
-                  <div class="col-md-3">
-                    <label for="deadBacklogs" class="form-label">
-                      <i class="bi bi-x-circle text-danger me-1"></i>
-                      Dead Backlogs <span class="text-danger">*</span>
-                    </label>
-                    <input type="number" class="form-control" id="deadBacklogs" formControlName="deadBacklogs" placeholder="0"
-                           [class.is-invalid]="shouldShowError('deadBacklogs')">
-                    <div class="invalid-feedback" *ngIf="shouldShowError('deadBacklogs')">
-                      <i class="bi bi-exclamation-circle me-1"></i>
-                      <span *ngIf="studentForm.get('deadBacklogs')?.errors?.['required']">Dead backlogs is required</span>
-                      <span *ngIf="studentForm.get('deadBacklogs')?.errors?.['min']">Backlogs cannot be negative</span>
-                    </div>
-                  </div>
-
-                  <div class="col-12 mt-4">
-                    <div class="alert alert-info d-flex align-items-center">
-                      <i class="bi bi-graph-up me-2 fs-5"></i>
-                      <strong>CGPA & SPI Records</strong>
-                    </div>
-                  </div>
-
-                  <div class="col-md-3">
-                    <label for="cgpaLatest" class="form-label">
-                      <i class="bi bi-star-fill text-warning me-1"></i>
-                      CGPA (Latest) <span class="text-danger">*</span>
-                    </label>
-                    <input type="number" class="form-control" id="cgpaLatest" formControlName="cgpaLatest" step="0.01" placeholder="0.00"
-                           [class.is-invalid]="shouldShowError('cgpaLatest')">
-                    <div class="invalid-feedback" *ngIf="shouldShowError('cgpaLatest')">
-                      <i class="bi bi-exclamation-circle me-1"></i>
-                      <span *ngIf="studentForm.get('cgpaLatest')?.errors?.['required']">CGPA is required</span>
-                      <span *ngIf="studentForm.get('cgpaLatest')?.errors?.['min']">CGPA must be at least 0</span>
-                      <span *ngIf="studentForm.get('cgpaLatest')?.errors?.['max']">CGPA cannot exceed 10</span>
-                    </div>
-                  </div>
-
-                  <div class="col-md-3">
-                    <label for="sem1SPI" class="form-label">
-                      <i class="bi bi-1-circle text-primary me-1"></i>
-                      Sem 1 SPI
-                    </label>
-                    <input type="number" class="form-control" id="sem1SPI" formControlName="sem1SPI" step="0.01" placeholder="0.00"
-                           [class.is-invalid]="shouldShowError('sem1SPI')">
-                    <div class="invalid-feedback" *ngIf="shouldShowError('sem1SPI')">
-                      <i class="bi bi-exclamation-circle me-1"></i>
-                      <span *ngIf="studentForm.get('sem1SPI')?.errors?.['min']">SPI must be at least 0</span>
-                      <span *ngIf="studentForm.get('sem1SPI')?.errors?.['max']">SPI cannot exceed 10</span>
-                    </div>
-                  </div>
-
-                  <div class="col-md-3">
-                    <label for="sem2SPI" class="form-label">
-                      <i class="bi bi-2-circle text-primary me-1"></i>
-                      Sem 2 SPI
-                    </label>
-                    <input type="number" class="form-control" id="sem2SPI" formControlName="sem2SPI" step="0.01" placeholder="0.00"
-                           [class.is-invalid]="shouldShowError('sem2SPI')">
-                    <div class="invalid-feedback" *ngIf="shouldShowError('sem2SPI')">
-                      <i class="bi bi-exclamation-circle me-1"></i>
-                      <span *ngIf="studentForm.get('sem2SPI')?.errors?.['min']">SPI must be at least 0</span>
-                      <span *ngIf="studentForm.get('sem2SPI')?.errors?.['max']">SPI cannot exceed 10</span>
-                    </div>
-                  </div>
-
-                  <div class="col-md-3">
-                    <label for="sem3SPI" class="form-label">
-                      <i class="bi bi-3-circle text-primary me-1"></i>
-                      Sem 3 SPI
-                    </label>
-                    <input type="number" class="form-control" id="sem3SPI" formControlName="sem3SPI" step="0.01" placeholder="0.00"
-                           [class.is-invalid]="shouldShowError('sem3SPI')">
-                    <div class="invalid-feedback" *ngIf="shouldShowError('sem3SPI')">
-                      <i class="bi bi-exclamation-circle me-1"></i>
-                      <span *ngIf="studentForm.get('sem3SPI')?.errors?.['min']">SPI must be at least 0</span>
-                      <span *ngIf="studentForm.get('sem3SPI')?.errors?.['max']">SPI cannot exceed 10</span>
-                    </div>
-                  </div>
-
-                  <div class="col-md-3">
-                    <label for="sem4SPI" class="form-label">
-                      <i class="bi bi-4-circle text-primary me-1"></i>
-                      Sem 4 SPI
-                    </label>
-                    <input type="number" class="form-control" id="sem4SPI" formControlName="sem4SPI" step="0.01" placeholder="0.00"
-                           [class.is-invalid]="shouldShowError('sem4SPI')">
-                    <div class="invalid-feedback" *ngIf="shouldShowError('sem4SPI')">
-                      <i class="bi bi-exclamation-circle me-1"></i>
-                      <span *ngIf="studentForm.get('sem4SPI')?.errors?.['min']">SPI must be at least 0</span>
-                      <span *ngIf="studentForm.get('sem4SPI')?.errors?.['max']">SPI cannot exceed 10</span>
-                    </div>
-                  </div>
-
-                  <div class="col-md-3">
-                    <label for="sem5SPI" class="form-label">
-                      <i class="bi bi-5-circle text-primary me-1"></i>
-                      Sem 5 SPI
-                    </label>
-                    <input type="number" class="form-control" id="sem5SPI" formControlName="sem5SPI" step="0.01" placeholder="0.00"
-                           [class.is-invalid]="shouldShowError('sem5SPI')">
-                    <div class="invalid-feedback" *ngIf="shouldShowError('sem5SPI')">
-                      <i class="bi bi-exclamation-circle me-1"></i>
-                      <span *ngIf="studentForm.get('sem5SPI')?.errors?.['min']">SPI must be at least 0</span>
-                      <span *ngIf="studentForm.get('sem5SPI')?.errors?.['max']">SPI cannot exceed 10</span>
-                    </div>
-                  </div>
-
-                  <div class="col-md-3">
-                    <label for="sem6SPI" class="form-label">
-                      <i class="bi bi-6-circle text-primary me-1"></i>
-                      Sem 6 SPI
-                    </label>
-                    <input type="number" class="form-control" id="sem6SPI" formControlName="sem6SPI" step="0.01" placeholder="0.00"
-                           [class.is-invalid]="shouldShowError('sem6SPI')">
-                    <div class="invalid-feedback" *ngIf="shouldShowError('sem6SPI')">
-                      <i class="bi bi-exclamation-circle me-1"></i>
-                      <span *ngIf="studentForm.get('sem6SPI')?.errors?.['min']">SPI must be at least 0</span>
-                      <span *ngIf="studentForm.get('sem6SPI')?.errors?.['max']">SPI cannot exceed 10</span>
-                    </div>
-                  </div>
-
-                  <div class="col-md-3">
-                    <label for="sem7SPI" class="form-label">
-                      <i class="bi bi-7-circle text-primary me-1"></i>
-                      Sem 7 SPI
-                    </label>
-                    <input type="number" class="form-control" id="sem7SPI" formControlName="sem7SPI" step="0.01" placeholder="0.00"
-                           [class.is-invalid]="shouldShowError('sem7SPI')">
-                    <div class="invalid-feedback" *ngIf="shouldShowError('sem7SPI')">
-                      <i class="bi bi-exclamation-circle me-1"></i>
-                      <span *ngIf="studentForm.get('sem7SPI')?.errors?.['min']">SPI must be at least 0</span>
-                      <span *ngIf="studentForm.get('sem7SPI')?.errors?.['max']">SPI cannot exceed 10</span>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Address Information -->
-          <div class="accordion-item mb-3 border rounded shadow-sm">
-            <h2 class="accordion-header" id="headingAddress">
-              <button class="accordion-button collapsed rounded-top" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAddress" aria-expanded="false" aria-controls="collapseAddress">
-                <i class="bi bi-geo-alt me-2 fs-5"></i>
-                <span class="fw-bold">Address Information</span>
-              </button>
-            </h2>
-            <div id="collapseAddress" class="accordion-collapse collapse" aria-labelledby="headingAddress">
-              <div class="accordion-body bg-light">
-                <div class="row g-3">
-                  
-                  <div class="col-12">
-                    <label for="address" class="form-label">
-                      <i class="bi bi-house text-primary me-1"></i>
-                      Address <span class="text-danger">*</span>
-                    </label>
-                    <textarea class="form-control" id="address" formControlName="address" rows="3" placeholder="Enter full address"
-                              [class.is-invalid]="shouldShowError('address')"></textarea>
-                    <div class="invalid-feedback" *ngIf="shouldShowError('address')">
-                      <i class="bi bi-exclamation-circle me-1"></i>Address is required
-                    </div>
-                  </div>
-
-                  <div class="col-md-6">
-                    <label for="city" class="form-label">
-                      <i class="bi bi-building text-primary me-1"></i>
-                      City <span class="text-danger">*</span>
-                    </label>
-                    <select class="form-select" id="city" formControlName="city"
-                            [class.is-invalid]="shouldShowError('city')">
-                      <option value="">Select City</option>
-                      <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
-                    </select>
-                    <div class="invalid-feedback" *ngIf="shouldShowError('city')">
-                      <i class="bi bi-exclamation-circle me-1"></i>City is required
-                    </div>
-                  </div>
-
-                  <div class="col-md-6">
-                    <label for="state" class="form-label">
-                      <i class="bi bi-map text-primary me-1"></i>
-                      State <span class="text-danger">*</span>
-                    </label>
-                    <select class="form-select" id="state" formControlName="state"
-                            [class.is-invalid]="shouldShowError('state')">
-                      <option value="">Select State</option>
-                      <option *ngFor="let state of states" [value]="state">{{ state }}</option>
-                    </select>
-                    <div class="invalid-feedback" *ngIf="shouldShowError('state')">
-                      <i class="bi bi-exclamation-circle me-1"></i>State is required
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Document Uploads -->
-          <div class="accordion-item mb-3 border rounded shadow-sm">
-            <h2 class="accordion-header" id="headingDocuments">
-              <button class="accordion-button collapsed rounded-top" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDocuments" aria-expanded="false" aria-controls="collapseDocuments">
-                <i class="bi bi-file-earmark-arrow-up me-2 fs-5"></i>
-                <span class="fw-bold">Document Uploads</span>
-              </button>
-            </h2>
-            <div id="collapseDocuments" class="accordion-collapse collapse" aria-labelledby="headingDocuments">
-              <div class="accordion-body bg-light">
-                <div class="row g-3">
-                  
-                  <div class="col-12">
-                    <div class="alert alert-info d-flex align-items-center">
-                      <i class="bi bi-file-earmark-person me-2 fs-5"></i>
-                      <strong>Resume</strong>
-                    </div>
-                  </div>
-
-                  <div class="col-md-6">
-                    <label for="resume" class="form-label">
-                      <i class="bi bi-file-earmark-pdf text-danger me-1"></i>
-                      Resume
-                    </label>
-                    <div class="input-group">
-                      <input type="file" class="form-control" id="resume" (change)="onFileChange($event, 'resume')" accept=".pdf,.doc,.docx">
-                      <button *ngIf="hasFile('resume')" class="btn btn-outline-danger" type="button" (click)="removeFile('resume', $event)">
-                        <i class="bi bi-trash"></i>
-                      </button>
-                    </div>
-                    <div class="form-text">
-                      <i class="bi bi-info-circle me-1"></i>Accepted formats: PDF, DOC, DOCX
-                      <span *ngIf="hasFile('resume')" class="text-success ms-2">
-                        <i class="bi bi-check-circle me-1"></i>{{ getFileName('resume') }}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div class="col-12 mt-4">
-                    <div class="alert alert-info d-flex align-items-center">
-                      <i class="bi bi-award me-2 fs-5"></i>
-                      <strong>Previous Education Certificates</strong>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                    <label for="sscMarksheet" class="form-label">
-                      <i class="bi bi-file-earmark-text text-success me-1"></i>
-                      SSC Marksheet
-                    </label>
-                    <div class="input-group">
-                      <input type="file" class="form-control" id="sscMarksheet" (change)="onFileChange($event, 'sscMarksheet')" accept=".pdf,.jpg,.jpeg,.png">
-                      <button *ngIf="hasFile('sscMarksheet')" class="btn btn-outline-danger" type="button" (click)="removeFile('sscMarksheet', $event)">
-                        <i class="bi bi-trash"></i>
-                      </button>
-                    </div>
-                    <div class="form-text">
-                      <i class="bi bi-info-circle me-1"></i>PDF or Image
-                      <span *ngIf="hasFile('sscMarksheet')" class="text-success ms-2">
-                        <i class="bi bi-check-circle me-1"></i>{{ getFileName('sscMarksheet') }}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                    <label for="hscMarksheet" class="form-label">
-                      <i class="bi bi-file-earmark-text text-success me-1"></i>
-                      HSC Marksheet
-                    </label>
-                    <div class="input-group">
-                      <input type="file" class="form-control" id="hscMarksheet" (change)="onFileChange($event, 'hscMarksheet')" accept=".pdf,.jpg,.jpeg,.png">
-                      <button *ngIf="hasFile('hscMarksheet')" class="btn btn-outline-danger" type="button" (click)="removeFile('hscMarksheet', $event)">
-                        <i class="bi bi-trash"></i>
-                      </button>
-                    </div>
-                    <div class="form-text">
-                      <i class="bi bi-info-circle me-1"></i>PDF or Image
-                      <span *ngIf="hasFile('hscMarksheet')" class="text-success ms-2">
-                        <i class="bi bi-check-circle me-1"></i>{{ getFileName('hscMarksheet') }}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                    <label for="diplomaCertificate" class="form-label">
-                      <i class="bi bi-file-earmark-text text-success me-1"></i>
-                      Diploma Certificate
-                    </label>
-                    <div class="input-group">
-                      <input type="file" class="form-control" id="diplomaCertificate" (change)="onFileChange($event, 'diplomaCertificate')" accept=".pdf,.jpg,.jpeg,.png">
-                      <button *ngIf="hasFile('diplomaCertificate')" class="btn btn-outline-danger" type="button" (click)="removeFile('diplomaCertificate', $event)">
-                        <i class="bi bi-trash"></i>
-                      </button>
-                    </div>
-                    <div class="form-text">
-                      <i class="bi bi-info-circle me-1"></i>PDF or Image
-                      <span *ngIf="hasFile('diplomaCertificate')" class="text-success ms-2">
-                        <i class="bi bi-check-circle me-1"></i>{{ getFileName('diplomaCertificate') }}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div class="col-12 mt-4">
-                    <div class="alert alert-info d-flex align-items-center">
-                      <i class="bi bi-journals me-2 fs-5"></i>
-                      <strong>Semester Marksheets</strong>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                    <label for="sem1Marksheet" class="form-label">
-                      <i class="bi bi-file-earmark-text text-primary me-1"></i>
-                      Sem 1 Marksheet
-                    </label>
-                    <div class="input-group">
-                      <input type="file" class="form-control" id="sem1Marksheet" (change)="onFileChange($event, 'sem1Marksheet')" accept=".pdf,.jpg,.jpeg,.png">
-                      <button *ngIf="hasFile('sem1Marksheet')" class="btn btn-outline-danger" type="button" (click)="removeFile('sem1Marksheet', $event)">
-                        <i class="bi bi-trash"></i>
-                      </button>
-                    </div>
-                    <span *ngIf="hasFile('sem1Marksheet')" class="text-success small">
-                      <i class="bi bi-check-circle me-1"></i>{{ getFileName('sem1Marksheet') }}
-                    </span>
-                  </div>
-
-                  <div class="col-md-4">
-                    <label for="sem2Marksheet" class="form-label">
-                      <i class="bi bi-file-earmark-text text-primary me-1"></i>
-                      Sem 2 Marksheet
-                    </label>
-                    <div class="input-group">
-                      <input type="file" class="form-control" id="sem2Marksheet" (change)="onFileChange($event, 'sem2Marksheet')" accept=".pdf,.jpg,.jpeg,.png">
-                      <button *ngIf="hasFile('sem2Marksheet')" class="btn btn-outline-danger" type="button" (click)="removeFile('sem2Marksheet', $event)">
-                        <i class="bi bi-trash"></i>
-                      </button>
-                    </div>
-                    <span *ngIf="hasFile('sem2Marksheet')" class="text-success small">
-                      <i class="bi bi-check-circle me-1"></i>{{ getFileName('sem2Marksheet') }}
-                    </span>
-                  </div>
-
-                  <div class="col-md-4">
-                    <label for="sem3Marksheet" class="form-label">
-                      <i class="bi bi-file-earmark-text text-primary me-1"></i>
-                      Sem 3 Marksheet
-                    </label>
-                    <div class="input-group">
-                      <input type="file" class="form-control" id="sem3Marksheet" (change)="onFileChange($event, 'sem3Marksheet')" accept=".pdf,.jpg,.jpeg,.png">
-                      <button *ngIf="hasFile('sem3Marksheet')" class="btn btn-outline-danger" type="button" (click)="removeFile('sem3Marksheet', $event)">
-                        <i class="bi bi-trash"></i>
-                      </button>
-                    </div>
-                    <span *ngIf="hasFile('sem3Marksheet')" class="text-success small">
-                      <i class="bi bi-check-circle me-1"></i>{{ getFileName('sem3Marksheet') }}
-                    </span>
-                  </div>
-
-                  <div class="col-md-4">
-                    <label for="sem4Marksheet" class="form-label">
-                      <i class="bi bi-file-earmark-text text-primary me-1"></i>
-                      Sem 4 Marksheet
-                    </label>
-                    <div class="input-group">
-                      <input type="file" class="form-control" id="sem4Marksheet" (change)="onFileChange($event, 'sem4Marksheet')" accept=".pdf,.jpg,.jpeg,.png">
-                      <button *ngIf="hasFile('sem4Marksheet')" class="btn btn-outline-danger" type="button" (click)="removeFile('sem4Marksheet', $event)">
-                        <i class="bi bi-trash"></i>
-                      </button>
-                    </div>
-                    <span *ngIf="hasFile('sem4Marksheet')" class="text-success small">
-                      <i class="bi bi-check-circle me-1"></i>{{ getFileName('sem4Marksheet') }}
-                    </span>
-                  </div>
-
-                  <div class="col-md-4">
-                    <label for="sem5Marksheet" class="form-label">
-                      <i class="bi bi-file-earmark-text text-primary me-1"></i>
-                      Sem 5 Marksheet
-                    </label>
-                    <div class="input-group">
-                      <input type="file" class="form-control" id="sem5Marksheet" (change)="onFileChange($event, 'sem5Marksheet')" accept=".pdf,.jpg,.jpeg,.png">
-                      <button *ngIf="hasFile('sem5Marksheet')" class="btn btn-outline-danger" type="button" (click)="removeFile('sem5Marksheet', $event)">
-                        <i class="bi bi-trash"></i>
-                      </button>
-                    </div>
-                    <span *ngIf="hasFile('sem5Marksheet')" class="text-success small">
-                      <i class="bi bi-check-circle me-1"></i>{{ getFileName('sem5Marksheet') }}
-                    </span>
-                  </div>
-
-                  <div class="col-md-4">
-                    <label for="sem6Marksheet" class="form-label">
-                      <i class="bi bi-file-earmark-text text-primary me-1"></i>
-                      Sem 6 Marksheet
-                    </label>
-                    <div class="input-group">
-                      <input type="file" class="form-control" id="sem6Marksheet" (change)="onFileChange($event, 'sem6Marksheet')" accept=".pdf,.jpg,.jpeg,.png">
-                      <button *ngIf="hasFile('sem6Marksheet')" class="btn btn-outline-danger" type="button" (click)="removeFile('sem6Marksheet', $event)">
-                        <i class="bi bi-trash"></i>
-                      </button>
-                    </div>
-                    <span *ngIf="hasFile('sem6Marksheet')" class="text-success small">
-                      <i class="bi bi-check-circle me-1"></i>{{ getFileName('sem6Marksheet') }}
-                    </span>
-                  </div>
-
-                  <div class="col-md-4">
-                    <label for="sem7Marksheet" class="form-label">
-                      <i class="bi bi-file-earmark-text text-primary me-1"></i>
-                      Sem 7 Marksheet
-                    </label>
-                    <div class="input-group">
-                      <input type="file" class="form-control" id="sem7Marksheet" (change)="onFileChange($event, 'sem7Marksheet')" accept=".pdf,.jpg,.jpeg,.png">
-                      <button *ngIf="hasFile('sem7Marksheet')" class="btn btn-outline-danger" type="button" (click)="removeFile('sem7Marksheet', $event)">
-                        <i class="bi bi-trash"></i>
-                      </button>
-                    </div>
-                    <span *ngIf="hasFile('sem7Marksheet')" class="text-success small">
-                      <i class="bi bi-check-circle me-1"></i>{{ getFileName('sem7Marksheet') }}
-                    </span>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-          </div>
-
         </div>
+        <div class="card-body p-4">
+            <form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
 
-        <!-- Form Actions -->
-        <div class="d-flex justify-content-end gap-3 mt-4">
-          <button type="button" class="btn btn-outline-secondary btn-lg" (click)="onReset()">
-            <i class="bi bi-arrow-counterclockwise me-2"></i>Reset
-          </button>
-          <button type="submit" class="btn btn-primary btn-lg px-5">
-            <i class="bi bi-check-circle me-2"></i>Submit
-          </button>
-        </div>
+                <!-- Accordion -->
+                <div class="accordion accordion-flush" id="studentProfileAccordion">
 
-      </form>
-    </div>
+                    <!-- Basic Information -->
+                    <div class="accordion-item mb-3 border rounded shadow-sm">
+                        <h2 class="accordion-header" id="headingBasic">
+                            <button class="accordion-button rounded-top" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseBasic" aria-expanded="true" aria-controls="collapseBasic">
+                                <i class="bi bi-person-badge me-2 fs-5"></i>
+                                <span class="fw-bold">Basic Information</span>
+                            </button>
+                        </h2>
+                        <div id="collapseBasic" class="accordion-collapse collapse show" aria-labelledby="headingBasic">
+                            <div class="accordion-body bg-light">
+                                <div class="row g-3">
+
+                                    <div class="col-md-6">
+                                        <label for="enrollmentNumber" class="form-label">
+                                            <i class="bi bi-hash text-primary me-1"></i>
+                                            Enrollment Number <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="text" class="form-control" id="enrollmentNumber"
+                                            formControlName="enrollmentNumber" placeholder="Enter enrollment number"
+                                            [class.is-invalid]="shouldShowError('enrollmentNumber')">
+                                        <div class="invalid-feedback" *ngIf="shouldShowError('enrollmentNumber')">
+                                            <i class="bi bi-exclamation-circle me-1"></i>
+                                            <span
+                                                *ngIf="studentForm.get('enrollmentNumber')?.errors?.['required']">Enrollment
+                                                number is required</span>
+                                            <span *ngIf="studentForm.get('enrollmentNumber')?.errors?.['pattern']">Only
+                                                uppercase letters and numbers allowed</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label">
+                                            <i class="bi bi-briefcase text-primary me-1"></i>
+                                            Interested for Placement
+                                        </label>
+                                        <div class="form-check form-switch mt-2">
+                                            <input class="form-check-input" type="checkbox" role="switch"
+                                                id="interestedForPlacement" formControlName="interestedForPlacement"
+                                                style="width: 3rem; height: 1.5rem;">
+                                            <label class="form-check-label ms-2 fs-5" for="interestedForPlacement">
+                                                <span class="badge"
+                                                    [class.bg-success]="studentForm.get('interestedForPlacement')?.value"
+                                                    [class.bg-secondary]="!studentForm.get('interestedForPlacement')?.value">
+                                                    {{ studentForm.get('interestedForPlacement')?.value ? 'Yes' : 'No'
+                                                    }}
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="firstName" class="form-label">
+                                            <i class="bi bi-person text-primary me-1"></i>
+                                            First Name <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="text" class="form-control" id="firstName"
+                                            formControlName="firstName" placeholder="First name"
+                                            [class.is-invalid]="shouldShowError('firstName')">
+                                        <div class="invalid-feedback" *ngIf="shouldShowError('firstName')">
+                                            <i class="bi bi-exclamation-circle me-1"></i>
+                                            <span *ngIf="studentForm.get('firstName')?.errors?.['required']">First name
+                                                is required</span>
+                                            <span *ngIf="studentForm.get('firstName')?.errors?.['minlength']">Minimum 2
+                                                characters required</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="middleName" class="form-label">
+                                            <i class="bi bi-person text-primary me-1"></i>
+                                            Middle Name
+                                        </label>
+                                        <input type="text" class="form-control" id="middleName"
+                                            formControlName="middleName" placeholder="Middle name">
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="lastName" class="form-label">
+                                            <i class="bi bi-person text-primary me-1"></i>
+                                            Last Name <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="text" class="form-control" id="lastName" formControlName="lastName"
+                                            placeholder="Last name" [class.is-invalid]="shouldShowError('lastName')">
+                                        <div class="invalid-feedback" *ngIf="shouldShowError('lastName')">
+                                            <i class="bi bi-exclamation-circle me-1"></i>
+                                            <span *ngIf="studentForm.get('lastName')?.errors?.['required']">Last name is
+                                                required</span>
+                                            <span *ngIf="studentForm.get('lastName')?.errors?.['minlength']">Minimum 2
+                                                characters required</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="personalMail" class="form-label">
+                                            <i class="bi bi-envelope text-primary me-1"></i>
+                                            Personal Email <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="email" class="form-control" id="personalMail"
+                                            formControlName="personalMail" placeholder="example@email.com"
+                                            [class.is-invalid]="shouldShowError('personalMail')">
+                                        <div class="invalid-feedback" *ngIf="shouldShowError('personalMail')">
+                                            <i class="bi bi-exclamation-circle me-1"></i>
+                                            <span *ngIf="studentForm.get('personalMail')?.errors?.['required']">Email is
+                                                required</span>
+                                            <span *ngIf="studentForm.get('personalMail')?.errors?.['email']">Valid email
+                                                is required</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="dateOfBirth" class="form-label">
+                                            <i class="bi bi-calendar-event text-primary me-1"></i>
+                                            Date of Birth <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="date" class="form-control" id="dateOfBirth"
+                                            formControlName="dateOfBirth"
+                                            [class.is-invalid]="shouldShowError('dateOfBirth')">
+                                        <div class="invalid-feedback" *ngIf="shouldShowError('dateOfBirth')">
+                                            <i class="bi bi-exclamation-circle me-1"></i>Date of birth is required
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+  <label for="branch" class="form-label">
+    <i class="bi bi-diagram-3 text-primary me-1"></i>
+    Branch <span class="text-danger">*</span>
+  </label>
+  <select class="form-select" id="branch" formControlName="branch" [class.is-invalid]="shouldShowError('branch')">
+    <option value="">Select Branch</option>
+    <option *ngFor="let branch of branches" [value]="branch">{{ branch }}</option>
+  </select>
+  <div class="invalid-feedback" *ngIf="shouldShowError('branch')">
+    <i class="bi bi-exclamation-circle me-1"></i>Branch is required
   </div>
+</div>
+
+
+                                    <div class="col-md-6">
+                                        <label for="gender" class="form-label">
+                                            <i class="bi bi-gender-ambiguous text-primary me-1"></i>
+                                            Gender <span class="text-danger">*</span>
+                                        </label>
+                                        <select class="form-select" id="gender" formControlName="gender"
+                                            [class.is-invalid]="shouldShowError('gender')">
+                                            <option value="">Select Gender</option>
+                                            <option *ngFor="let gender of genders" [value]="gender">{{ gender }}
+                                            </option>
+                                        </select>
+                                        <div class="invalid-feedback" *ngIf="shouldShowError('gender')">
+                                            <i class="bi bi-exclamation-circle me-1"></i>Gender is required
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="mediumOfEducation" class="form-label">
+                                            <i class="bi bi-book text-primary me-1"></i>
+                                            Medium of Education <span class="text-danger">*</span>
+                                        </label>
+                                        <select class="form-select" id="mediumOfEducation"
+                                            formControlName="mediumOfEducation"
+                                            [class.is-invalid]="shouldShowError('mediumOfEducation')">
+                                            <option value="">Select Medium</option>
+                                            <option *ngFor="let medium of mediums" [value]="medium">{{ medium }}
+                                            </option>
+                                        </select>
+                                        <div class="invalid-feedback" *ngIf="shouldShowError('mediumOfEducation')">
+                                            <i class="bi bi-exclamation-circle me-1"></i>Medium of education is required
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="boardOfEducation" class="form-label">
+                                            <i class="bi bi-bank text-primary me-1"></i>
+                                            Board of Education <span class="text-danger">*</span>
+                                        </label>
+                                        <select class="form-select" id="boardOfEducation"
+                                            formControlName="boardOfEducation"
+                                            [class.is-invalid]="shouldShowError('boardOfEducation')">
+                                            <option value="">Select Board</option>
+                                            <option *ngFor="let board of boards" [value]="board">{{ board }}</option>
+                                        </select>
+                                        <div class="invalid-feedback" *ngIf="shouldShowError('boardOfEducation')">
+                                            <i class="bi bi-exclamation-circle me-1"></i>Board of education is required
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="phoneNumber" class="form-label">
+                                            <i class="bi bi-phone text-primary me-1"></i>
+                                            Phone Number <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="tel" class="form-control" id="phoneNumber"
+                                            formControlName="phoneNumber" placeholder="10-digit phone number"
+                                            [class.is-invalid]="shouldShowError('phoneNumber')">
+                                        <div class="invalid-feedback" *ngIf="shouldShowError('phoneNumber')">
+                                            <i class="bi bi-exclamation-circle me-1"></i>
+                                            <span *ngIf="studentForm.get('phoneNumber')?.errors?.['required']">Phone
+                                                number is required</span>
+                                            <span *ngIf="studentForm.get('phoneNumber')?.errors?.['pattern']">Valid
+                                                10-digit phone number is required</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="alternatePhoneNumber" class="form-label">
+                                            <i class="bi bi-telephone text-primary me-1"></i>
+                                            Alternate Phone Number
+                                        </label>
+                                        <input type="tel" class="form-control" id="alternatePhoneNumber"
+                                            formControlName="alternatePhoneNumber" placeholder="10-digit phone number"
+                                            [class.is-invalid]="shouldShowError('alternatePhoneNumber')">
+                                        <div class="invalid-feedback" *ngIf="shouldShowError('alternatePhoneNumber')">
+                                            <i class="bi bi-exclamation-circle me-1"></i>Valid 10-digit phone number
+                                            required
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Academic Records -->
+                    <div class="accordion-item mb-3 border rounded shadow-sm">
+                        <h2 class="accordion-header" id="headingAcademic">
+                            <button class="accordion-button collapsed rounded-top" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#collapseAcademic" aria-expanded="false"
+                                aria-controls="collapseAcademic">
+                                <i class="bi bi-mortarboard me-2 fs-5"></i>
+                                <span class="fw-bold">Academic Records</span>
+                            </button>
+                        </h2>
+                        <div id="collapseAcademic" class="accordion-collapse collapse"
+                            aria-labelledby="headingAcademic">
+                            <div class="accordion-body bg-light">
+                                <div class="row g-3">
+
+                                    <div class="col-12">
+                                        <div class="alert alert-info d-flex align-items-center">
+                                            <i class="bi bi-info-circle-fill me-2 fs-5"></i>
+                                            <strong>Previous Education</strong>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="sscPercentage" class="form-label">
+                                            <i class="bi bi-percent text-primary me-1"></i>
+                                            SSC Percentage <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="input-group">
+                                            <input type="number" class="form-control" id="sscPercentage"
+                                                formControlName="sscPercentage" step="0.01" placeholder="0.00"
+                                                [class.is-invalid]="shouldShowError('sscPercentage')">
+                                            <span class="input-group-text">%</span>
+                                        </div>
+                                        <div class="invalid-feedback" *ngIf="shouldShowError('sscPercentage')">
+                                            <i class="bi bi-exclamation-circle me-1"></i>
+                                            <span *ngIf="studentForm.get('sscPercentage')?.errors?.['required']">SSC
+                                                percentage is required</span>
+                                            <span *ngIf="studentForm.get('sscPercentage')?.errors?.['min']">Percentage
+                                                must be at least 0</span>
+                                            <span *ngIf="studentForm.get('sscPercentage')?.errors?.['max']">Percentage
+                                                cannot exceed 100</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="hscPercentage" class="form-label">
+                                            <i class="bi bi-percent text-primary me-1"></i>
+                                            HSC Percentage
+                                        </label>
+                                        <div class="input-group">
+                                            <input type="number" class="form-control" id="hscPercentage"
+                                                formControlName="hscPercentage" step="0.01" placeholder="0.00"
+                                                [class.is-invalid]="shouldShowError('hscPercentage')">
+                                            <span class="input-group-text">%</span>
+                                        </div>
+                                        <div class="invalid-feedback" *ngIf="shouldShowError('hscPercentage')">
+                                            <i class="bi bi-exclamation-circle me-1"></i>
+                                            <span *ngIf="studentForm.get('hscPercentage')?.errors?.['min']">Percentage
+                                                must be at least 0</span>
+                                            <span *ngIf="studentForm.get('hscPercentage')?.errors?.['max']">Percentage
+                                                cannot exceed 100</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="diplomaPercentage" class="form-label">
+                                            <i class="bi bi-percent text-primary me-1"></i>
+                                            Diploma Percentage
+                                        </label>
+                                        <div class="input-group">
+                                            <input type="number" class="form-control" id="diplomaPercentage"
+                                                formControlName="diplomaPercentage" step="0.01" placeholder="0.00"
+                                                [class.is-invalid]="shouldShowError('diplomaPercentage')">
+                                            <span class="input-group-text">%</span>
+                                        </div>
+                                        <div class="invalid-feedback" *ngIf="shouldShowError('diplomaPercentage')">
+                                            <i class="bi bi-exclamation-circle me-1"></i>
+                                            <span
+                                                *ngIf="studentForm.get('diplomaPercentage')?.errors?.['min']">Percentage
+                                                must be at least 0</span>
+                                            <span
+                                                *ngIf="studentForm.get('diplomaPercentage')?.errors?.['max']">Percentage
+                                                cannot exceed 100</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mt-4">
+                                        <div class="alert alert-info d-flex align-items-center">
+                                            <i class="bi bi-journal-check me-2 fs-5"></i>
+                                            <strong>Current Academic Status</strong>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="currentSemester" class="form-label">
+                                            <i class="bi bi-calendar3 text-primary me-1"></i>
+                                            Current Semester <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="number" class="form-control" id="currentSemester"
+                                            formControlName="currentSemester" placeholder="1-8"
+                                            [class.is-invalid]="shouldShowError('currentSemester')">
+                                        <div class="invalid-feedback" *ngIf="shouldShowError('currentSemester')">
+                                            <i class="bi bi-exclamation-circle me-1"></i>
+                                            <span
+                                                *ngIf="studentForm.get('currentSemester')?.errors?.['required']">Current
+                                                semester is required</span>
+                                            <span *ngIf="studentForm.get('currentSemester')?.errors?.['min']">Semester
+                                                must be at least 1</span>
+                                            <span *ngIf="studentForm.get('currentSemester')?.errors?.['max']">Semester
+                                                cannot exceed 8</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="currentYear" class="form-label">
+                                            <i class="bi bi-calendar2-week text-primary me-1"></i>
+                                            Current Year <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="number" class="form-control" id="currentYear"
+                                            formControlName="currentYear" placeholder="1-4"
+                                            [class.is-invalid]="shouldShowError('currentYear')">
+                                        <div class="invalid-feedback" *ngIf="shouldShowError('currentYear')">
+                                            <i class="bi bi-exclamation-circle me-1"></i>
+                                            <span *ngIf="studentForm.get('currentYear')?.errors?.['required']">Current
+                                                year is required</span>
+                                            <span *ngIf="studentForm.get('currentYear')?.errors?.['min']">Year must be
+                                                at least 1</span>
+                                            <span *ngIf="studentForm.get('currentYear')?.errors?.['max']">Year cannot
+                                                exceed 4</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="currentBacklogs" class="form-label">
+                                            <i class="bi bi-exclamation-triangle text-warning me-1"></i>
+                                            Current Backlogs <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="number" class="form-control" id="currentBacklogs"
+                                            formControlName="currentBacklogs" placeholder="0"
+                                            [class.is-invalid]="shouldShowError('currentBacklogs')">
+                                        <div class="invalid-feedback" *ngIf="shouldShowError('currentBacklogs')">
+                                            <i class="bi bi-exclamation-circle me-1"></i>
+                                            <span
+                                                *ngIf="studentForm.get('currentBacklogs')?.errors?.['required']">Current
+                                                backlogs is required</span>
+                                            <span *ngIf="studentForm.get('currentBacklogs')?.errors?.['min']">Backlogs
+                                                cannot be negative</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="deadBacklogs" class="form-label">
+                                            <i class="bi bi-x-circle text-danger me-1"></i>
+                                            Dead Backlogs <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="number" class="form-control" id="deadBacklogs"
+                                            formControlName="deadBacklogs" placeholder="0"
+                                            [class.is-invalid]="shouldShowError('deadBacklogs')">
+                                        <div class="invalid-feedback" *ngIf="shouldShowError('deadBacklogs')">
+                                            <i class="bi bi-exclamation-circle me-1"></i>
+                                            <span *ngIf="studentForm.get('deadBacklogs')?.errors?.['required']">Dead
+                                                backlogs is required</span>
+                                            <span *ngIf="studentForm.get('deadBacklogs')?.errors?.['min']">Backlogs
+                                                cannot be negative</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mt-4">
+                                        <div class="alert alert-info d-flex align-items-center">
+                                            <i class="bi bi-graph-up me-2 fs-5"></i>
+                                            <strong>CGPA & SPI Records</strong>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="cgpaLatest" class="form-label">
+                                            <i class="bi bi-star-fill text-warning me-1"></i>
+                                            CGPA (Latest) <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="number" class="form-control" id="cgpaLatest"
+                                            formControlName="cgpaLatest" step="0.01" placeholder="0.00"
+                                            [class.is-invalid]="shouldShowError('cgpaLatest')">
+                                        <div class="invalid-feedback" *ngIf="shouldShowError('cgpaLatest')">
+                                            <i class="bi bi-exclamation-circle me-1"></i>
+                                            <span *ngIf="studentForm.get('cgpaLatest')?.errors?.['required']">CGPA is
+                                                required</span>
+                                            <span *ngIf="studentForm.get('cgpaLatest')?.errors?.['min']">CGPA must be at
+                                                least 0</span>
+                                            <span *ngIf="studentForm.get('cgpaLatest')?.errors?.['max']">CGPA cannot
+                                                exceed 10</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="sem1SPI" class="form-label">
+                                            <i class="bi bi-1-circle text-primary me-1"></i>
+                                            Sem 1 SPI
+                                        </label>
+                                        <input type="number" class="form-control" id="sem1SPI" formControlName="sem1SPI"
+                                            step="0.01" placeholder="0.00"
+                                            [class.is-invalid]="shouldShowError('sem1SPI')">
+                                        <div class="invalid-feedback" *ngIf="shouldShowError('sem1SPI')">
+                                            <i class="bi bi-exclamation-circle me-1"></i>
+                                            <span *ngIf="studentForm.get('sem1SPI')?.errors?.['min']">SPI must be at
+                                                least 0</span>
+                                            <span *ngIf="studentForm.get('sem1SPI')?.errors?.['max']">SPI cannot exceed
+                                                10</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="sem2SPI" class="form-label">
+                                            <i class="bi bi-2-circle text-primary me-1"></i>
+                                            Sem 2 SPI
+                                        </label>
+                                        <input type="number" class="form-control" id="sem2SPI" formControlName="sem2SPI"
+                                            step="0.01" placeholder="0.00"
+                                            [class.is-invalid]="shouldShowError('sem2SPI')">
+                                        <div class="invalid-feedback" *ngIf="shouldShowError('sem2SPI')">
+                                            <i class="bi bi-exclamation-circle me-1"></i>
+                                            <span *ngIf="studentForm.get('sem2SPI')?.errors?.['min']">SPI must be at
+                                                least 0</span>
+                                            <span *ngIf="studentForm.get('sem2SPI')?.errors?.['max']">SPI cannot exceed
+                                                10</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="sem3SPI" class="form-label">
+                                            <i class="bi bi-3-circle text-primary me-1"></i>
+                                            Sem 3 SPI
+                                        </label>
+                                        <input type="number" class="form-control" id="sem3SPI" formControlName="sem3SPI"
+                                            step="0.01" placeholder="0.00"
+                                            [class.is-invalid]="shouldShowError('sem3SPI')">
+                                        <div class="invalid-feedback" *ngIf="shouldShowError('sem3SPI')">
+                                            <i class="bi bi-exclamation-circle me-1"></i>
+                                            <span *ngIf="studentForm.get('sem3SPI')?.errors?.['min']">SPI must be at
+                                                least 0</span>
+                                            <span *ngIf="studentForm.get('sem3SPI')?.errors?.['max']">SPI cannot exceed
+                                                10</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="sem4SPI" class="form-label">
+                                            <i class="bi bi-4-circle text-primary me-1"></i>
+                                            Sem 4 SPI
+                                        </label>
+                                        <input type="number" class="form-control" id="sem4SPI" formControlName="sem4SPI"
+                                            step="0.01" placeholder="0.00"
+                                            [class.is-invalid]="shouldShowError('sem4SPI')">
+                                        <div class="invalid-feedback" *ngIf="shouldShowError('sem4SPI')">
+                                            <i class="bi bi-exclamation-circle me-1"></i>
+                                            <span *ngIf="studentForm.get('sem4SPI')?.errors?.['min']">SPI must be at
+                                                least 0</span>
+                                            <span *ngIf="studentForm.get('sem4SPI')?.errors?.['max']">SPI cannot exceed
+                                                10</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="sem5SPI" class="form-label">
+                                            <i class="bi bi-5-circle text-primary me-1"></i>
+                                            Sem 5 SPI
+                                        </label>
+                                        <input type="number" class="form-control" id="sem5SPI" formControlName="sem5SPI"
+                                            step="0.01" placeholder="0.00"
+                                            [class.is-invalid]="shouldShowError('sem5SPI')">
+                                        <div class="invalid-feedback" *ngIf="shouldShowError('sem5SPI')">
+                                            <i class="bi bi-exclamation-circle me-1"></i>
+                                            <span *ngIf="studentForm.get('sem5SPI')?.errors?.['min']">SPI must be at
+                                                least 0</span>
+                                            <span *ngIf="studentForm.get('sem5SPI')?.errors?.['max']">SPI cannot exceed
+                                                10</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="sem6SPI" class="form-label">
+                                            <i class="bi bi-6-circle text-primary me-1"></i>
+                                            Sem 6 SPI
+                                        </label>
+                                        <input type="number" class="form-control" id="sem6SPI" formControlName="sem6SPI"
+                                            step="0.01" placeholder="0.00"
+                                            [class.is-invalid]="shouldShowError('sem6SPI')">
+                                        <div class="invalid-feedback" *ngIf="shouldShowError('sem6SPI')">
+                                            <i class="bi bi-exclamation-circle me-1"></i>
+                                            <span *ngIf="studentForm.get('sem6SPI')?.errors?.['min']">SPI must be at
+                                                least 0</span>
+                                            <span *ngIf="studentForm.get('sem6SPI')?.errors?.['max']">SPI cannot exceed
+                                                10</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="sem7SPI" class="form-label">
+                                            <i class="bi bi-7-circle text-primary me-1"></i>
+                                            Sem 7 SPI
+                                        </label>
+                                        <input type="number" class="form-control" id="sem7SPI" formControlName="sem7SPI"
+                                            step="0.01" placeholder="0.00"
+                                            [class.is-invalid]="shouldShowError('sem7SPI')">
+                                        <div class="invalid-feedback" *ngIf="shouldShowError('sem7SPI')">
+                                            <i class="bi bi-exclamation-circle me-1"></i>
+                                            <span *ngIf="studentForm.get('sem7SPI')?.errors?.['min']">SPI must be at
+                                                least 0</span>
+                                            <span *ngIf="studentForm.get('sem7SPI')?.errors?.['max']">SPI cannot exceed
+                                                10</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Address Information -->
+                    <div class="accordion-item mb-3 border rounded shadow-sm">
+                        <h2 class="accordion-header" id="headingAddress">
+                            <button class="accordion-button collapsed rounded-top" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#collapseAddress" aria-expanded="false"
+                                aria-controls="collapseAddress">
+                                <i class="bi bi-geo-alt me-2 fs-5"></i>
+                                <span class="fw-bold">Address Information</span>
+                            </button>
+                        </h2>
+                        <div id="collapseAddress" class="accordion-collapse collapse" aria-labelledby="headingAddress">
+                            <div class="accordion-body bg-light">
+                                <div class="row g-3">
+
+                                    <div class="col-12">
+                                        <label for="address" class="form-label">
+                                            <i class="bi bi-house text-primary me-1"></i>
+                                            Address <span class="text-danger">*</span>
+                                        </label>
+                                        <textarea class="form-control" id="address" formControlName="address" rows="3"
+                                            placeholder="Enter full address"
+                                            [class.is-invalid]="shouldShowError('address')"></textarea>
+                                        <div class="invalid-feedback" *ngIf="shouldShowError('address')">
+                                            <i class="bi bi-exclamation-circle me-1"></i>Address is required
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="city" class="form-label">
+                                            <i class="bi bi-building text-primary me-1"></i>
+                                            City <span class="text-danger">*</span>
+                                        </label>
+                                        <select class="form-select" id="city" formControlName="city"
+                                            [class.is-invalid]="shouldShowError('city')">
+                                            <option value="">Select City</option>
+                                            <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+                                        </select>
+                                        <div class="invalid-feedback" *ngIf="shouldShowError('city')">
+                                            <i class="bi bi-exclamation-circle me-1"></i>City is required
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="state" class="form-label">
+                                            <i class="bi bi-map text-primary me-1"></i>
+                                            State <span class="text-danger">*</span>
+                                        </label>
+                                        <select class="form-select" id="state" formControlName="state"
+                                            [class.is-invalid]="shouldShowError('state')">
+                                            <option value="">Select State</option>
+                                            <option *ngFor="let state of states" [value]="state">{{ state }}</option>
+                                        </select>
+                                        <div class="invalid-feedback" *ngIf="shouldShowError('state')">
+                                            <i class="bi bi-exclamation-circle me-1"></i>State is required
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Document Uploads -->
+                    <div class="accordion-item mb-3 border rounded shadow-sm">
+                        <h2 class="accordion-header" id="headingDocuments">
+                            <button class="accordion-button collapsed rounded-top" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#collapseDocuments" aria-expanded="false"
+                                aria-controls="collapseDocuments">
+                                <i class="bi bi-file-earmark-arrow-up me-2 fs-5"></i>
+                                <span class="fw-bold">Document Uploads</span>
+                            </button>
+                        </h2>
+                        <div id="collapseDocuments" class="accordion-collapse collapse"
+                            aria-labelledby="headingDocuments">
+                            <div class="accordion-body bg-light">
+                                <div class="row g-3">
+
+                                    <div class="col-12">
+                                        <div class="alert alert-info d-flex align-items-center">
+                                            <i class="bi bi-file-earmark-person me-2 fs-5"></i>
+                                            <strong>Resume</strong>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="resume" class="form-label">
+                                            <i class="bi bi-file-earmark-pdf text-danger me-1"></i>
+                                            Resume
+                                        </label>
+                                        <div class="input-group">
+                                            <input type="file" class="form-control" id="resume"
+                                                (change)="onFileChange($event, 'resume')" accept=".pdf,.doc,.docx">
+                                            <button *ngIf="hasFile('resume')" class="btn btn-outline-danger"
+                                                type="button" (click)="removeFile('resume', $event)">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                        <div class="form-text">
+                                            <i class="bi bi-info-circle me-1"></i>Accepted formats: PDF, DOC, DOCX
+                                            <span *ngIf="hasFile('resume')" class="text-success ms-2">
+                                                <i class="bi bi-check-circle me-1"></i>{{ getFileName('resume') }}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mt-4">
+                                        <div class="alert alert-info d-flex align-items-center">
+                                            <i class="bi bi-award me-2 fs-5"></i>
+                                            <strong>Previous Education Certificates</strong>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="sscMarksheet" class="form-label">
+                                            <i class="bi bi-file-earmark-text text-success me-1"></i>
+                                            SSC Marksheet
+                                        </label>
+                                        <div class="input-group">
+                                            <input type="file" class="form-control" id="sscMarksheet"
+                                                (change)="onFileChange($event, 'sscMarksheet')"
+                                                accept=".pdf,.jpg,.jpeg,.png">
+                                            <button *ngIf="hasFile('sscMarksheet')" class="btn btn-outline-danger"
+                                                type="button" (click)="removeFile('sscMarksheet', $event)">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                        <div class="form-text">
+                                            <i class="bi bi-info-circle me-1"></i>PDF or Image
+                                            <span *ngIf="hasFile('sscMarksheet')" class="text-success ms-2">
+                                                <i class="bi bi-check-circle me-1"></i>{{ getFileName('sscMarksheet') }}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="hscMarksheet" class="form-label">
+                                            <i class="bi bi-file-earmark-text text-success me-1"></i>
+                                            HSC Marksheet
+                                        </label>
+                                        <div class="input-group">
+                                            <input type="file" class="form-control" id="hscMarksheet"
+                                                (change)="onFileChange($event, 'hscMarksheet')"
+                                                accept=".pdf,.jpg,.jpeg,.png">
+                                            <button *ngIf="hasFile('hscMarksheet')" class="btn btn-outline-danger"
+                                                type="button" (click)="removeFile('hscMarksheet', $event)">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                        <div class="form-text">
+                                            <i class="bi bi-info-circle me-1"></i>PDF or Image
+                                            <span *ngIf="hasFile('hscMarksheet')" class="text-success ms-2">
+                                                <i class="bi bi-check-circle me-1"></i>{{ getFileName('hscMarksheet') }}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="diplomaCertificate" class="form-label">
+                                            <i class="bi bi-file-earmark-text text-success me-1"></i>
+                                            Diploma Certificate
+                                        </label>
+                                        <div class="input-group">
+                                            <input type="file" class="form-control" id="diplomaCertificate"
+                                                (change)="onFileChange($event, 'diplomaCertificate')"
+                                                accept=".pdf,.jpg,.jpeg,.png">
+                                            <button *ngIf="hasFile('diplomaCertificate')" class="btn btn-outline-danger"
+                                                type="button" (click)="removeFile('diplomaCertificate', $event)">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                        <div class="form-text">
+                                            <i class="bi bi-info-circle me-1"></i>PDF or Image
+                                            <span *ngIf="hasFile('diplomaCertificate')" class="text-success ms-2">
+                                                <i class="bi bi-check-circle me-1"></i>{{
+                                                getFileName('diplomaCertificate') }}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mt-4">
+                                        <div class="alert alert-info d-flex align-items-center">
+                                            <i class="bi bi-journals me-2 fs-5"></i>
+                                            <strong>Semester Marksheets</strong>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="sem1Marksheet" class="form-label">
+                                            <i class="bi bi-file-earmark-text text-primary me-1"></i>
+                                            Sem 1 Marksheet
+                                        </label>
+                                        <div class="input-group">
+                                            <input type="file" class="form-control" id="sem1Marksheet"
+                                                (change)="onFileChange($event, 'sem1Marksheet')"
+                                                accept=".pdf,.jpg,.jpeg,.png">
+                                            <button *ngIf="hasFile('sem1Marksheet')" class="btn btn-outline-danger"
+                                                type="button" (click)="removeFile('sem1Marksheet', $event)">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                        <span *ngIf="hasFile('sem1Marksheet')" class="text-success small">
+                                            <i class="bi bi-check-circle me-1"></i>{{ getFileName('sem1Marksheet') }}
+                                        </span>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="sem2Marksheet" class="form-label">
+                                            <i class="bi bi-file-earmark-text text-primary me-1"></i>
+                                            Sem 2 Marksheet
+                                        </label>
+                                        <div class="input-group">
+                                            <input type="file" class="form-control" id="sem2Marksheet"
+                                                (change)="onFileChange($event, 'sem2Marksheet')"
+                                                accept=".pdf,.jpg,.jpeg,.png">
+                                            <button *ngIf="hasFile('sem2Marksheet')" class="btn btn-outline-danger"
+                                                type="button" (click)="removeFile('sem2Marksheet', $event)">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                        <span *ngIf="hasFile('sem2Marksheet')" class="text-success small">
+                                            <i class="bi bi-check-circle me-1"></i>{{ getFileName('sem2Marksheet') }}
+                                        </span>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="sem3Marksheet" class="form-label">
+                                            <i class="bi bi-file-earmark-text text-primary me-1"></i>
+                                            Sem 3 Marksheet
+                                        </label>
+                                        <div class="input-group">
+                                            <input type="file" class="form-control" id="sem3Marksheet"
+                                                (change)="onFileChange($event, 'sem3Marksheet')"
+                                                accept=".pdf,.jpg,.jpeg,.png">
+                                            <button *ngIf="hasFile('sem3Marksheet')" class="btn btn-outline-danger"
+                                                type="button" (click)="removeFile('sem3Marksheet', $event)">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                        <span *ngIf="hasFile('sem3Marksheet')" class="text-success small">
+                                            <i class="bi bi-check-circle me-1"></i>{{ getFileName('sem3Marksheet') }}
+                                        </span>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="sem4Marksheet" class="form-label">
+                                            <i class="bi bi-file-earmark-text text-primary me-1"></i>
+                                            Sem 4 Marksheet
+                                        </label>
+                                        <div class="input-group">
+                                            <input type="file" class="form-control" id="sem4Marksheet"
+                                                (change)="onFileChange($event, 'sem4Marksheet')"
+                                                accept=".pdf,.jpg,.jpeg,.png">
+                                            <button *ngIf="hasFile('sem4Marksheet')" class="btn btn-outline-danger"
+                                                type="button" (click)="removeFile('sem4Marksheet', $event)">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                        <span *ngIf="hasFile('sem4Marksheet')" class="text-success small">
+                                            <i class="bi bi-check-circle me-1"></i>{{ getFileName('sem4Marksheet') }}
+                                        </span>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="sem5Marksheet" class="form-label">
+                                            <i class="bi bi-file-earmark-text text-primary me-1"></i>
+                                            Sem 5 Marksheet
+                                        </label>
+                                        <div class="input-group">
+                                            <input type="file" class="form-control" id="sem5Marksheet"
+                                                (change)="onFileChange($event, 'sem5Marksheet')"
+                                                accept=".pdf,.jpg,.jpeg,.png">
+                                            <button *ngIf="hasFile('sem5Marksheet')" class="btn btn-outline-danger"
+                                                type="button" (click)="removeFile('sem5Marksheet', $event)">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                        <span *ngIf="hasFile('sem5Marksheet')" class="text-success small">
+                                            <i class="bi bi-check-circle me-1"></i>{{ getFileName('sem5Marksheet') }}
+                                        </span>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="sem6Marksheet" class="form-label">
+                                            <i class="bi bi-file-earmark-text text-primary me-1"></i>
+                                            Sem 6 Marksheet
+                                        </label>
+                                        <div class="input-group">
+                                            <input type="file" class="form-control" id="sem6Marksheet"
+                                                (change)="onFileChange($event, 'sem6Marksheet')"
+                                                accept=".pdf,.jpg,.jpeg,.png">
+                                            <button *ngIf="hasFile('sem6Marksheet')" class="btn btn-outline-danger"
+                                                type="button" (click)="removeFile('sem6Marksheet', $event)">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                        <span *ngIf="hasFile('sem6Marksheet')" class="text-success small">
+                                            <i class="bi bi-check-circle me-1"></i>{{ getFileName('sem6Marksheet') }}
+                                        </span>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="sem7Marksheet" class="form-label">
+                                            <i class="bi bi-file-earmark-text text-primary me-1"></i>
+                                            Sem 7 Marksheet
+                                        </label>
+                                        <div class="input-group">
+                                            <input type="file" class="form-control" id="sem7Marksheet"
+                                                (change)="onFileChange($event, 'sem7Marksheet')"
+                                                accept=".pdf,.jpg,.jpeg,.png">
+                                            <button *ngIf="hasFile('sem7Marksheet')" class="btn btn-outline-danger"
+                                                type="button" (click)="removeFile('sem7Marksheet', $event)">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                        <span *ngIf="hasFile('sem7Marksheet')" class="text-success small">
+                                            <i class="bi bi-check-circle me-1"></i>{{ getFileName('sem7Marksheet') }}
+                                        </span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Form Actions -->
+                <div class="d-flex justify-content-end gap-3 mt-4">
+                    <button type="button" class="btn btn-outline-secondary btn-lg" (click)="onReset()">
+                        <i class="bi bi-arrow-counterclockwise me-2"></i>Reset
+                    </button>
+                    <button type="submit" class="btn btn-primary btn-lg px-5">
+                        <i class="bi bi-check-circle me-2"></i>Submit
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
 </div>
