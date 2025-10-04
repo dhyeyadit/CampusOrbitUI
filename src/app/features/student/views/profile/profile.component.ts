@@ -1,11 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AccordionSection } from '../../../../models/common/accordian.model';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
-  imports: [ReactiveFormsModule,CommonModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
@@ -13,13 +12,8 @@ export class ProfileComponent {
   studentForm!: FormGroup;
   isSubmitting = signal(false);
 
-  accordionSections: AccordionSection[] = [
-    { id: 'basic', title: 'Basic Information', icon: 'bi-person', expanded: true },
-    { id: 'contact', title: 'Contact Information', icon: 'bi-telephone', expanded: false },
-    { id: 'academic', title: 'Academic Information', icon: 'bi-book', expanded: false },
-    { id: 'semester', title: 'Semester Performance', icon: 'bi-graph-up', expanded: false },
-    { id: 'documents', title: 'Documents', icon: 'bi-file-earmark-text', expanded: false }
-  ];
+  // File names for display
+  fileNames: { [key: string]: string } = {};
 
   branches = [
     'Computer Engineering',
@@ -31,20 +25,10 @@ export class ProfileComponent {
   ];
 
   genders = ['Male', 'Female', 'Other'];
-
-  educationMediums = ['English', 'Gujarati', 'Hindi', 'Other'];
-
+  mediums = ['English', 'Gujarati', 'Hindi', 'Other'];
   boards = ['GSEB', 'CBSE', 'ICSE', 'State Board', 'Other'];
-
-  states = [
-    'Gujarat', 'Maharashtra', 'Rajasthan', 'Delhi', 'Karnataka',
-    'Tamil Nadu', 'Uttar Pradesh', 'Madhya Pradesh', 'West Bengal', 'Other'
-  ];
-
-  cities = [
-    'Ahmedabad', 'Surat', 'Vadodara', 'Rajkot', 'Bhavnagar',
-    'Jamnagar', 'Gandhinagar', 'Mumbai', 'Pune', 'Bangalore', 'Other'
-  ];
+  states = ['Gujarat', 'Maharashtra', 'Rajasthan', 'Delhi', 'Karnataka', 'Other'];
+  cities = ['Ahmedabad', 'Surat', 'Vadodara', 'Rajkot', 'Mumbai', 'Other'];
 
   constructor(private fb: FormBuilder) {}
 
@@ -54,9 +38,9 @@ export class ProfileComponent {
 
   initializeForm(): void {
     this.studentForm = this.fb.group({
+      // Basic Information
       enrollmentNumber: ['', [Validators.required, Validators.pattern(/^[A-Z0-9]+$/)]],
       interestedForPlacement: [true],
-
       firstName: ['', [Validators.required, Validators.minLength(2)]],
       middleName: [''],
       lastName: ['', [Validators.required, Validators.minLength(2)]],
@@ -66,22 +50,18 @@ export class ProfileComponent {
       mediumOfEducation: ['', Validators.required],
       boardOfEducation: ['', Validators.required],
       dateOfBirth: ['', Validators.required],
-
       phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       alternatePhoneNumber: ['', Validators.pattern(/^\d{10}$/)],
-      address: ['', Validators.required],
-      city: ['', Validators.required],
-      state: ['', Validators.required],
 
+      // Academic Information
       sscPercentage: ['', [Validators.required, Validators.min(0), Validators.max(100)]],
       hscPercentage: ['', [Validators.min(0), Validators.max(100)]],
       diplomaPercentage: ['', [Validators.min(0), Validators.max(100)]],
       currentBacklogs: ['', [Validators.required, Validators.min(0)]],
       deadBacklogs: ['', [Validators.required, Validators.min(0)]],
-      cgpa: ['', [Validators.required, Validators.min(0), Validators.max(10)]],
+      cgpaLatest: ['', [Validators.required, Validators.min(0), Validators.max(10)]],
       currentSemester: ['', [Validators.required, Validators.min(1), Validators.max(8)]],
       currentYear: ['', [Validators.required, Validators.min(1), Validators.max(4)]],
-
       sem1SPI: ['', [Validators.min(0), Validators.max(10)]],
       sem2SPI: ['', [Validators.min(0), Validators.max(10)]],
       sem3SPI: ['', [Validators.min(0), Validators.max(10)]],
@@ -90,6 +70,12 @@ export class ProfileComponent {
       sem6SPI: ['', [Validators.min(0), Validators.max(10)]],
       sem7SPI: ['', [Validators.min(0), Validators.max(10)]],
 
+      // Address Information
+      address: ['', Validators.required],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
+
+      // Documents
       resume: [null],
       sscMarksheet: [null],
       hscMarksheet: [null],
@@ -104,70 +90,73 @@ export class ProfileComponent {
     });
   }
 
-  toggleAccordion(sectionId: string): void {
-    const section = this.accordionSections.find(s => s.id === sectionId);
-    if (section) {
-      section.expanded = !section.expanded;
-    }
-  }
-
-  onFileSelect(event: Event, controlName: string): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      const file = input.files[0];
-      this.studentForm.patchValue({ [controlName]: file });
-      this.studentForm.get(controlName)?.markAsTouched();
-    }
-  }
-
+  // Validation helper methods
   isFieldInvalid(fieldName: string): boolean {
     const field = this.studentForm.get(fieldName);
     return !!(field && field.invalid && (field.dirty || field.touched));
   }
 
-  getErrorMessage(fieldName: string): string {
+  shouldShowError(fieldName: string): boolean {
     const field = this.studentForm.get(fieldName);
-    if (!field) return '';
+    return !!(field && field.invalid && field.touched);
+  }
 
-    if (field.hasError('required')) return 'This field is required';
-    if (field.hasError('email')) return 'Invalid email format';
-    if (field.hasError('pattern')) {
-      if (fieldName.includes('Phone')) return 'Must be 10 digits';
-      if (fieldName === 'enrollmentNumber') return 'Only uppercase letters and numbers allowed';
+  // File handling methods
+  onFileChange(event: Event, controlName: string): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.studentForm.patchValue({ [controlName]: file });
+      this.fileNames[controlName] = file.name;
+      
+      // Mark as touched to trigger validation
+      this.studentForm.get(controlName)?.markAsTouched();
     }
-    if (field.hasError('min')) return `Minimum value is ${field.errors?.['min'].min}`;
-    if (field.hasError('max')) return `Maximum value is ${field.errors?.['max'].max}`;
-    if (field.hasError('minlength')) return `Minimum length is ${field.errors?.['minlength'].requiredLength}`;
+  }
 
-    return '';
+  removeFile(controlName: string, event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    this.studentForm.patchValue({ [controlName]: null });
+    delete this.fileNames[controlName];
+    
+    // Reset the file input
+    const fileInput = document.getElementById(controlName) as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
   }
 
   getFileName(controlName: string): string {
-    const file = this.studentForm.get(controlName)?.value;
-    return file ? file.name : 'Choose file';
+    return this.fileNames[controlName] || 'No file chosen';
   }
 
+  hasFile(controlName: string): boolean {
+    return !!this.fileNames[controlName];
+  }
+
+  // Form submission
   onSubmit(): void {
+    // Mark all fields as touched to trigger validation display
+    Object.keys(this.studentForm.controls).forEach(key => {
+      this.studentForm.get(key)?.markAsTouched();
+    });
+
     if (this.studentForm.valid) {
       this.isSubmitting.set(true);
       console.log('Form Data:', this.studentForm.value);
 
+      // Simulate API call
       setTimeout(() => {
         this.isSubmitting.set(false);
         alert('Student profile submitted successfully!');
       }, 2000);
     } else {
-      Object.keys(this.studentForm.controls).forEach(key => {
-        this.studentForm.get(key)?.markAsTouched();
-      });
-
-      const firstInvalidSection = this.accordionSections.find(section => {
-        const sectionFields = this.getFieldsForSection(section.id);
-        return sectionFields.some(field => this.isFieldInvalid(field));
-      });
-
-      if (firstInvalidSection) {
-        firstInvalidSection.expanded = true;
+      // Scroll to first invalid field
+      const firstInvalidControl = document.querySelector('.is-invalid');
+      if (firstInvalidControl) {
+        firstInvalidControl.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
     }
   }
@@ -176,20 +165,6 @@ export class ProfileComponent {
     this.studentForm.reset({
       interestedForPlacement: true
     });
-  }
-
-  private getFieldsForSection(sectionId: string): string[] {
-    const fieldMap: { [key: string]: string[] } = {
-      basic: ['enrollmentNumber', 'interestedForPlacement', 'firstName', 'middleName', 'lastName',
-              'personalMail', 'branch', 'gender', 'mediumOfEducation', 'boardOfEducation', 'dateOfBirth'],
-      contact: ['phoneNumber', 'alternatePhoneNumber', 'address', 'city', 'state'],
-      academic: ['sscPercentage', 'hscPercentage', 'diplomaPercentage', 'currentBacklogs',
-                 'deadBacklogs', 'cgpa', 'currentSemester', 'currentYear'],
-      semester: ['sem1SPI', 'sem2SPI', 'sem3SPI', 'sem4SPI', 'sem5SPI', 'sem6SPI', 'sem7SPI'],
-      documents: ['resume', 'sscMarksheet', 'hscMarksheet', 'diplomaCertificate',
-                  'sem1Marksheet', 'sem2Marksheet', 'sem3Marksheet', 'sem4Marksheet',
-                  'sem5Marksheet', 'sem6Marksheet', 'sem7Marksheet']
-    };
-    return fieldMap[sectionId] || [];
+    this.fileNames = {};
   }
 }
