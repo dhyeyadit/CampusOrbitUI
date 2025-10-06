@@ -15,8 +15,10 @@
         </div>
         <div class="user-details">
           @if (loggedInUser()) {
-            <div class="user-name">{{ loggedInUser()?.fullName }}</div>
-            <div class="user-enrollment">{{ loggedInUser()?.enrollmentNumber }}</div>
+          <div class="user-name">{{ loggedInUser()?.fullName }}</div>
+          <div class="user-enrollment">
+            {{ loggedInUser()?.enrollmentNumber }}
+          </div>
           }
         </div>
       </div>
@@ -30,45 +32,53 @@
   <!-- Main Content Area -->
   <div class="content-wrapper">
     <!-- Sidebar -->
-    <nav class="sidebar"
-         (mouseenter)="toggleSidebar(true)"
-         (mouseleave)="toggleSidebar(false)"
-         [class.sidebar-expanded]="sidebarExpanded()"
-         [class.sidebar-collapsed]="!sidebarExpanded()">
-
+    <nav
+      class="sidebar"
+      (mouseenter)="toggleSidebar(true)"
+      (mouseleave)="toggleSidebar(false)"
+      [class.sidebar-expanded]="sidebarExpanded()"
+      [class.sidebar-collapsed]="!sidebarExpanded()"
+    >
       <ul class="sidebar-nav">
         @for (module of sidebarData(); track module.moduleId) {
-          <li class="nav-module">
-            <div class="module-header"
-                 (click)="toggleModule(module.moduleId)"
-                 [class.active]="activeModuleId() === module.moduleId">
-              <div class="module-icon-wrapper">
-                <i class="{{ module.cssIcon }} module-icon"></i>
-                <span class="module-name"
-                      [class.show]="sidebarExpanded()">
-                  {{ module.displayName }}
-                </span>
-              </div>
-              @if (sidebarExpanded()) {
-                <i class="bi chevron-icon"
-                   [class.bi-chevron-down]="activeModuleId() === module.moduleId"
-                   [class.bi-chevron-right]="activeModuleId() !== module.moduleId"></i>
-              }
+        <li class="nav-module">
+          <div
+            class="module-header"
+            (click)="toggleModule(module.moduleId)"
+            [class.active]="activeModuleId() === module.moduleId"
+          >
+            <div class="module-icon-wrapper">
+              <i class="{{ module.cssIcon }} module-icon"></i>
+              <span class="module-name" [class.show]="sidebarExpanded()">
+                {{ module.displayName }}
+              </span>
             </div>
-
-            @if (activeModuleId() === module.moduleId && sidebarExpanded()) {
-              <ul class="module-routes">
-                @for (route of module.routes; track route.path) {
-                  <li class="route-item">
-                    <a class="route-link" [routerLink]="route.path" routerLinkActive="active">
-                      <i class="bi bi-circle-fill route-dot"></i>
-                      <span class="route-name">{{ route.displayName }}</span>
-                    </a>
-                  </li>
-                }
-              </ul>
+            @if (sidebarExpanded()) {
+            <i
+              class="bi chevron-icon"
+              [class.bi-chevron-down]="activeModuleId() === module.moduleId"
+              [class.bi-chevron-right]="activeModuleId() !== module.moduleId"
+            ></i>
             }
-          </li>
+          </div>
+
+          @if (activeModuleId() === module.moduleId && sidebarExpanded()) {
+          <ul class="module-routes">
+            @for (route of module.routes; track route.path) {
+            <li class="route-item">
+              <a
+                class="route-link"
+                [routerLink]="route.path"
+                routerLinkActive="active"
+              >
+                <i class="bi bi-circle-fill route-dot"></i>
+                <span class="route-name">{{ route.displayName }}</span>
+              </a>
+            </li>
+            }
+          </ul>
+          }
+        </li>
         }
       </ul>
 

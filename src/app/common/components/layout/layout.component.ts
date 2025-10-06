@@ -9,7 +9,7 @@ import { Module } from '../../../models/common/module.model';
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, LoaderComponent, RouterLink],
+  imports: [RouterOutlet, CommonModule, RouterLink],
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.css']
 })

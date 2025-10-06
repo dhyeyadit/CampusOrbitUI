@@ -7,53 +7,54 @@ import { User } from '../models/user/user.model';
 import { Response } from '../models/common/response.model';
 import { LoaderService } from '../common/services/loader.service';
 import { Module } from '../models/common/module.model';
+import { ApiService } from '../common/services/api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private http = inject(HttpClient);
+  private _apiService = inject(ApiService);
   private msalService = inject(MsalService);
   private loader = inject(LoaderService);
+
   baseUrl = environment.authConfig.apiUrl;
 
-  // ✅ store user in signal
+  // Signals for user and sidebar modules
   user = signal<User | null>(null);
-  sidebar=signal<Module[] | null>([])
+  sidebar = signal<Module[]>([]);
 
   loadUser(): void {
-  this.loader.show();
+    this.loader.show();
 
-  from(
-    this.msalService.instance.acquireTokenSilent({
-      scopes: environment.msal.scopes,
-      account: this.msalService.instance.getActiveAccount()!
-    })
-  )
-  .pipe(
-    switchMap(tokenResponse => {
-      const headers = { Authorization: `Bearer ${tokenResponse.accessToken}` };
+    from(
+      this.msalService.instance.acquireTokenSilent({
+        scopes: environment.msal.scopes,
+        account: this.msalService.instance.getActiveAccount()!
+      })
+    )
+    .pipe(
+      switchMap(tokenResponse => {
+        const headers = { Authorization: `Bearer ${tokenResponse.accessToken}` };
 
-      return forkJoin({
-        user: this.http.get<Response<User>>(`${this.baseUrl}/me`, { headers }),
-        sidebar: this.http.get<Response<Module[]>>(`${this.baseUrl}/user-permissions`, { headers })
-      });
-    }),
-    finalize(() => this.loader.hide())
-  )
-  .subscribe({
-    next: ({ user, sidebar }) => {
-      this.user.set(user.data);
-      this.sidebar.set(sidebar.data); // Assuming this.sidebar is a BehaviorSubject or state
-    },
-    error: err => {
-      console.error('User or sidebar load failed', err);
-      this.user.set(null);
-      this.sidebar.set([]); // fallback
-    }
-  });
-}
-
+        return forkJoin({
+          user: this._apiService.get<Response<User>>(`${this.baseUrl}/me`, null, { headers }),
+          sidebar: this._apiService.get<Response<Module[]>>(`${this.baseUrl}/user-permissions`, null, { headers })
+        });
+      }),
+      finalize(() => this.loader.hide())
+    )
+    .subscribe({
+      next: ({ user, sidebar }) => {
+        this.user.set(user.data);
+        this.sidebar.set(sidebar.data!);
+      },
+      error: err => {
+        console.error('User or sidebar load failed', err);
+        this.user.set(null);
+        this.sidebar.set([]);
+      }
+    });
+  }
 
   logout() {
     this.msalService.logoutRedirect();
