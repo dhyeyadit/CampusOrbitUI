@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 import { InjectSetupWrapper } from '@angular/core/testing';
 import { LookupService } from '../../../../common/services/lookup.service';
+import { Lookup } from '../../../../models/common/lookup.model';
+import { LocationService } from '../../../../common/services/location.service';
 
 @Component({
   selector: 'app-profile',
@@ -13,42 +15,84 @@ import { LookupService } from '../../../../common/services/lookup.service';
 export class ProfileComponent {
   studentForm!: FormGroup;
   isSubmitting = signal(false);
-  _lookupService=inject(LookupService)
+  _lookupService = inject(LookupService)
+  _locationService=inject(LocationService)
   // File names for display
   fileNames: { [key: string]: string } = {};
 
-  branches = [
-    'Computer Engineering',
-    'Information Technology',
-    'Electronics & Communication',
-    'Mechanical Engineering',
-    'Civil Engineering',
-    'Electrical Engineering'
-  ];
-
-  genders = ['Male', 'Female', 'Other'];
-  mediums = ['English', 'Gujarati', 'Hindi', 'Other'];
-  boards = ['GSEB', 'CBSE', 'ICSE', 'State Board', 'Other'];
-  states = ['Gujarat', 'Maharashtra', 'Rajasthan', 'Delhi', 'Karnataka', 'Other'];
-  cities = ['Ahmedabad', 'Surat', 'Vadodara', 'Rajkot', 'Mumbai', 'Other'];
+  branches = signal<Lookup[]>([])
+  genders = signal<Lookup[]>([]);
+  mediumOfEducation = signal<Lookup[]>([]);
+  boards = signal<Lookup[]>([])
+  states = signal<string[]>([]);
+  cities = signal<string[]>([]);
 
   constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.initializeForm();
-    this._lookupService.getLookupsByTypeName("Gender").subscribe({
-      next:(res)=>{
-        console.log(res);
-        
+    this._lookupService.getLookupsByMultipleTypeNames(["Branch", "Gender", "MediumOfEducation", "BoardOfEducatioon"]).subscribe({
+      next: (res) => {
+        if (res.status && res.data) {
+          const genderLookup = res.data.find(item => item.lookupTypeName === "Gender");
+          const branchLookup = res.data.find(item => item.lookupTypeName === "Branch");
+          const mediumOfEducationLookup = res.data.find(item => item.lookupTypeName === "MediumOfEducation");
+          const boardOfEducationLookup = res.data.find(item => item.lookupTypeName === "BoardOfEducatioon");
+
+          this.genders.set(genderLookup ? genderLookup.lookups : []);
+          this.branches.set(branchLookup ? branchLookup.lookups : []);
+          this.mediumOfEducation.set(mediumOfEducationLookup ? mediumOfEducationLookup.lookups : []);
+          this.boards.set(boardOfEducationLookup ? boardOfEducationLookup.lookups : []);
+        } else {
+          this.genders.set([]);
+          this.branches.set([]);
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching lookups:', err);
+        this.genders.set([]);
+        this.branches.set([]);
       }
-    })
+    });
+
+    this._locationService.getStates().subscribe({
+  next: (res) => {
+    this.states.set(res.data!);
+
+    // Now setup listener AFTER states are set
+    this.studentForm.get('state')?.valueChanges.subscribe((selectedState: string) => {
+      if (selectedState) {
+        this._locationService.getCitiesByState(selectedState).subscribe({
+          next: (res) => {
+            this.cities.set(res.data || []);
+            // Optionally reset city when state changes
+            this.studentForm.get('city')?.reset();
+          },
+          error: (err) => {
+            console.error('Error loading cities:', err);
+            this.cities.set([]);
+          }
+        });
+      } else {
+        this.cities.set([]);
+        this.studentForm.get('city')?.reset();
+      }
+    });
+  },
+  error: (err) => {
+    console.error('Error loading states:', err);
+    this.states.set([]);
+  }
+});
+
+
   }
 
   initializeForm(): void {
     this.studentForm = this.fb.group({
       // Basic Information
       enrollmentNumber: ['', [Validators.required, Validators.pattern(/^[A-Z0-9]+$/)]],
-      fullName:['', [Validators.required, Validators.minLength(2)]],
+      fullName: ['', [Validators.required, Validators.minLength(2)]],
       interestedForPlacement: [true],
       firstName: ['', [Validators.required, Validators.minLength(2)]],
       middleName: [''],
