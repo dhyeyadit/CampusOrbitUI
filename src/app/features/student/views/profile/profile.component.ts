@@ -1,6 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { InjectSetupWrapper } from '@angular/core/testing';
+import { LookupService } from '../../../../common/services/lookup.service';
 
 @Component({
   selector: 'app-profile',
@@ -11,7 +13,7 @@ import { CommonModule } from '@angular/common';
 export class ProfileComponent {
   studentForm!: FormGroup;
   isSubmitting = signal(false);
-
+  _lookupService=inject(LookupService)
   // File names for display
   fileNames: { [key: string]: string } = {};
 
@@ -34,6 +36,12 @@ export class ProfileComponent {
 
   ngOnInit(): void {
     this.initializeForm();
+    this._lookupService.getLookupsByTypeName("Gender").subscribe({
+      next:(res)=>{
+        console.log(res);
+        
+      }
+    })
   }
 
   initializeForm(): void {
