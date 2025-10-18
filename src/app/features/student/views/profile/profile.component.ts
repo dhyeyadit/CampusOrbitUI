@@ -40,6 +40,7 @@ export class ProfileComponent {
     this.studentForm = this.fb.group({
       // Basic Information
       enrollmentNumber: ['', [Validators.required, Validators.pattern(/^[A-Z0-9]+$/)]],
+      fullName:['', [Validators.required, Validators.minLength(2)]],
       interestedForPlacement: [true],
       firstName: ['', [Validators.required, Validators.minLength(2)]],
       middleName: [''],
