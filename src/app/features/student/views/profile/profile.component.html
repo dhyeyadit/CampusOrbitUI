@@ -43,11 +43,11 @@
                       id="enrollmentNumber"
                       formControlName="enrollmentNumber"
                       placeholder="Enter enrollment number"
-                      [class.is-invalid]="shouldShowError('enrollmentNumber')"
+                      [class.is-invalid]="isFieldInvalid('enrollmentNumber')"
                     />
                     <div
                       class="invalid-feedback"
-                      *ngIf="shouldShowError('enrollmentNumber')"
+                      *ngIf="isFieldInvalid('enrollmentNumber')"
                     >
                       <i class="bi bi-exclamation-circle me-1"></i>
                       <span
@@ -73,11 +73,11 @@
                       id="fullName"
                       formControlName="fullName"
                       placeholder="Enter full name as per marksheet"
-                      [class.is-invalid]="shouldShowError('fullName')"
+                      [class.is-invalid]="isFieldInvalid('fullName')"
                     />
                     <div
                       class="invalid-feedback"
-                      *ngIf="shouldShowError('fullName')"
+                      *ngIf="isFieldInvalid('fullName')"
                     >
                       <i class="bi bi-exclamation-circle me-1"></i>
                       <span
@@ -136,11 +136,11 @@
                       id="firstName"
                       formControlName="firstName"
                       placeholder="First name"
-                      [class.is-invalid]="shouldShowError('firstName')"
+                      [class.is-invalid]="isFieldInvalid('firstName')"
                     />
                     <div
                       class="invalid-feedback"
-                      *ngIf="shouldShowError('firstName')"
+                      *ngIf="isFieldInvalid('firstName')"
                     >
                       <i class="bi bi-exclamation-circle me-1"></i>
                       <span
@@ -179,11 +179,11 @@
                       id="lastName"
                       formControlName="lastName"
                       placeholder="Last name"
-                      [class.is-invalid]="shouldShowError('lastName')"
+                      [class.is-invalid]="isFieldInvalid('lastName')"
                     />
                     <div
                       class="invalid-feedback"
-                      *ngIf="shouldShowError('lastName')"
+                      *ngIf="isFieldInvalid('lastName')"
                     >
                       <i class="bi bi-exclamation-circle me-1"></i>
                       <span
@@ -208,11 +208,11 @@
                       id="personalMail"
                       formControlName="personalMail"
                       placeholder="example@email.com"
-                      [class.is-invalid]="shouldShowError('personalMail')"
+                      [class.is-invalid]="isFieldInvalid('personalMail')"
                     />
                     <div
                       class="invalid-feedback"
-                      *ngIf="shouldShowError('personalMail')"
+                      *ngIf="isFieldInvalid('personalMail')"
                     >
                       <i class="bi bi-exclamation-circle me-1"></i>
                       <span
@@ -236,11 +236,11 @@
                       class="form-control"
                       id="dateOfBirth"
                       formControlName="dateOfBirth"
-                      [class.is-invalid]="shouldShowError('dateOfBirth')"
+                      [class.is-invalid]="isFieldInvalid('dateOfBirth')"
                     />
                     <div
                       class="invalid-feedback"
-                      *ngIf="shouldShowError('dateOfBirth')"
+                      *ngIf="isFieldInvalid('dateOfBirth')"
                     >
                       <i class="bi bi-exclamation-circle me-1"></i>Date of birth
                       is required
@@ -256,7 +256,7 @@
                       class="form-select"
                       id="branch"
                       formControlName="branch"
-                      [class.is-invalid]="shouldShowError('branch')"
+                      [class.is-invalid]="isFieldInvalid('branch')"
                     >
                       <option value="">Select Branch</option>
                       <option *ngFor="let branch of branches()" [value]="branch.lookupId">
@@ -265,7 +265,7 @@
                     </select>
                     <div
                       class="invalid-feedback"
-                      *ngIf="shouldShowError('branch')"
+                      *ngIf="isFieldInvalid('branch')"
                     >
                       <i class="bi bi-exclamation-circle me-1"></i>Branch is
                       required
@@ -281,7 +281,7 @@
                       class="form-select"
                       id="gender"
                       formControlName="gender"
-                      [class.is-invalid]="shouldShowError('gender')"
+                      [class.is-invalid]="isFieldInvalid('gender')"
                     >
                       <option value="">Select Gender</option>
                       <option *ngFor="let gender of genders()" [value]="gender.lookupId">
@@ -290,7 +290,7 @@
                     </select>
                     <div
                       class="invalid-feedback"
-                      *ngIf="shouldShowError('gender')"
+                      *ngIf="isFieldInvalid('gender')"
                     >
                       <i class="bi bi-exclamation-circle me-1"></i>Gender is
                       required
@@ -306,7 +306,7 @@
                       class="form-select"
                       id="mediumOfEducation"
                       formControlName="mediumOfEducation"
-                      [class.is-invalid]="shouldShowError('mediumOfEducation')"
+                      [class.is-invalid]="isFieldInvalid('mediumOfEducation')"
                     >
                       <option value="">Select Medium</option>
                       <option *ngFor="let medium of mediumOfEducation()" [value]="medium.lookupId">
@@ -315,7 +315,7 @@
                     </select>
                     <div
                       class="invalid-feedback"
-                      *ngIf="shouldShowError('mediumOfEducation')"
+                      *ngIf="isFieldInvalid('mediumOfEducation')"
                     >
                       <i class="bi bi-exclamation-circle me-1"></i>Medium of
                       education is required
@@ -331,7 +331,7 @@
                       class="form-select"
                       id="boardOfEducation"
                       formControlName="boardOfEducation"
-                      [class.is-invalid]="shouldShowError('boardOfEducation')"
+                      [class.is-invalid]="isFieldInvalid('boardOfEducation')"
                     >
                       <option value="">Select Board</option>
                       <option *ngFor="let board of boards()" [value]="board.lookupId">
@@ -340,7 +340,7 @@
                     </select>
                     <div
                       class="invalid-feedback"
-                      *ngIf="shouldShowError('boardOfEducation')"
+                      *ngIf="isFieldInvalid('boardOfEducation')"
                     >
                       <i class="bi bi-exclamation-circle me-1"></i>Board of
                       education is required
@@ -358,11 +358,11 @@
                       id="phoneNumber"
                       formControlName="phoneNumber"
                       placeholder="10-digit phone number"
-                      [class.is-invalid]="shouldShowError('phoneNumber')"
+                      [class.is-invalid]="isFieldInvalid('phoneNumber')"
                     />
                     <div
                       class="invalid-feedback"
-                      *ngIf="shouldShowError('phoneNumber')"
+                      *ngIf="isFieldInvalid('phoneNumber')"
                     >
                       <i class="bi bi-exclamation-circle me-1"></i>
                       <span
@@ -388,12 +388,12 @@
                       formControlName="alternatePhoneNumber"
                       placeholder="10-digit phone number"
                       [class.is-invalid]="
-                        shouldShowError('alternatePhoneNumber')
+                        isFieldInvalid('alternatePhoneNumber')
                       "
                     />
                     <div
                       class="invalid-feedback"
-                      *ngIf="shouldShowError('alternatePhoneNumber')"
+                      *ngIf="isFieldInvalid('alternatePhoneNumber')"
                     >
                       <i class="bi bi-exclamation-circle me-1"></i>Valid
                       10-digit phone number required
@@ -446,13 +446,13 @@
                         formControlName="sscPercentage"
                         step="0.01"
                         placeholder="0.00"
-                        [class.is-invalid]="shouldShowError('sscPercentage')"
+                        [class.is-invalid]="isFieldInvalid('sscPercentage')"
                       />
                       <span class="input-group-text">%</span>
                     </div>
                     <div
                       class="invalid-feedback"
-                      *ngIf="shouldShowError('sscPercentage')"
+                      *ngIf="isFieldInvalid('sscPercentage')"
                     >
                       <i class="bi bi-exclamation-circle me-1"></i>
                       <span
@@ -483,13 +483,13 @@
                         formControlName="hscPercentage"
                         step="0.01"
                         placeholder="0.00"
-                        [class.is-invalid]="shouldShowError('hscPercentage')"
+                        [class.is-invalid]="isFieldInvalid('hscPercentage')"
                       />
                       <span class="input-group-text">%</span>
                     </div>
                     <div
                       class="invalid-feedback"
-                      *ngIf="shouldShowError('hscPercentage')"
+                      *ngIf="isFieldInvalid('hscPercentage')"
                     >
                       <i class="bi bi-exclamation-circle me-1"></i>
                       <span
@@ -517,14 +517,14 @@
                         step="0.01"
                         placeholder="0.00"
                         [class.is-invalid]="
-                          shouldShowError('diplomaPercentage')
+                          isFieldInvalid('diplomaPercentage')
                         "
                       />
                       <span class="input-group-text">%</span>
                     </div>
                     <div
                       class="invalid-feedback"
-                      *ngIf="shouldShowError('diplomaPercentage')"
+                      *ngIf="isFieldInvalid('diplomaPercentage')"
                     >
                       <i class="bi bi-exclamation-circle me-1"></i>
                       <span
@@ -556,11 +556,11 @@
                       id="currentSemester"
                       formControlName="currentSemester"
                       placeholder="1-8"
-                      [class.is-invalid]="shouldShowError('currentSemester')"
+                      [class.is-invalid]="isFieldInvalid('currentSemester')"
                     />
                     <div
                       class="invalid-feedback"
-                      *ngIf="shouldShowError('currentSemester')"
+                      *ngIf="isFieldInvalid('currentSemester')"
                     >
                       <i class="bi bi-exclamation-circle me-1"></i>
                       <span
@@ -589,11 +589,11 @@
                       id="currentYear"
                       formControlName="currentYear"
                       placeholder="1-4"
-                      [class.is-invalid]="shouldShowError('currentYear')"
+                      [class.is-invalid]="isFieldInvalid('currentYear')"
                     />
                     <div
                       class="invalid-feedback"
-                      *ngIf="shouldShowError('currentYear')"
+                      *ngIf="isFieldInvalid('currentYear')"
                     >
                       <i class="bi bi-exclamation-circle me-1"></i>
                       <span
@@ -624,11 +624,11 @@
                       id="currentBacklogs"
                       formControlName="currentBacklogs"
                       placeholder="0"
-                      [class.is-invalid]="shouldShowError('currentBacklogs')"
+                      [class.is-invalid]="isFieldInvalid('currentBacklogs')"
                     />
                     <div
                       class="invalid-feedback"
-                      *ngIf="shouldShowError('currentBacklogs')"
+                      *ngIf="isFieldInvalid('currentBacklogs')"
                     >
                       <i class="bi bi-exclamation-circle me-1"></i>
                       <span
@@ -653,11 +653,11 @@
                       id="deadBacklogs"
                       formControlName="deadBacklogs"
                       placeholder="0"
-                      [class.is-invalid]="shouldShowError('deadBacklogs')"
+                      [class.is-invalid]="isFieldInvalid('deadBacklogs')"
                     />
                     <div
                       class="invalid-feedback"
-                      *ngIf="shouldShowError('deadBacklogs')"
+                      *ngIf="isFieldInvalid('deadBacklogs')"
                     >
                       <i class="bi bi-exclamation-circle me-1"></i>
                       <span
@@ -690,11 +690,11 @@
                       formControlName="cgpaLatest"
                       step="0.01"
                       placeholder="0.00"
-                      [class.is-invalid]="shouldShowError('cgpaLatest')"
+                      [class.is-invalid]="isFieldInvalid('cgpaLatest')"
                     />
                     <div
                       class="invalid-feedback"
-                      *ngIf="shouldShowError('cgpaLatest')"
+                      *ngIf="isFieldInvalid('cgpaLatest')"
                     >
                       <i class="bi bi-exclamation-circle me-1"></i>
                       <span
@@ -724,11 +724,11 @@
                       formControlName="sem1SPI"
                       step="0.01"
                       placeholder="0.00"
-                      [class.is-invalid]="shouldShowError('sem1SPI')"
+                      [class.is-invalid]="isFieldInvalid('sem1SPI')"
                     />
                     <div
                       class="invalid-feedback"
-                      *ngIf="shouldShowError('sem1SPI')"
+                      *ngIf="isFieldInvalid('sem1SPI')"
                     >
                       <i class="bi bi-exclamation-circle me-1"></i>
                       <span *ngIf="studentForm.get('sem1SPI')?.errors?.['min']"
@@ -752,11 +752,11 @@
                       formControlName="sem2SPI"
                       step="0.01"
                       placeholder="0.00"
-                      [class.is-invalid]="shouldShowError('sem2SPI')"
+                      [class.is-invalid]="isFieldInvalid('sem2SPI')"
                     />
                     <div
                       class="invalid-feedback"
-                      *ngIf="shouldShowError('sem2SPI')"
+                      *ngIf="isFieldInvalid('sem2SPI')"
                     >
                       <i class="bi bi-exclamation-circle me-1"></i>
                       <span *ngIf="studentForm.get('sem2SPI')?.errors?.['min']"
@@ -780,11 +780,11 @@
                       formControlName="sem3SPI"
                       step="0.01"
                       placeholder="0.00"
-                      [class.is-invalid]="shouldShowError('sem3SPI')"
+                      [class.is-invalid]="isFieldInvalid('sem3SPI')"
                     />
                     <div
                       class="invalid-feedback"
-                      *ngIf="shouldShowError('sem3SPI')"
+                      *ngIf="isFieldInvalid('sem3SPI')"
                     >
                       <i class="bi bi-exclamation-circle me-1"></i>
                       <span *ngIf="studentForm.get('sem3SPI')?.errors?.['min']"
@@ -808,11 +808,11 @@
                       formControlName="sem4SPI"
                       step="0.01"
                       placeholder="0.00"
-                      [class.is-invalid]="shouldShowError('sem4SPI')"
+                      [class.is-invalid]="isFieldInvalid('sem4SPI')"
                     />
                     <div
                       class="invalid-feedback"
-                      *ngIf="shouldShowError('sem4SPI')"
+                      *ngIf="isFieldInvalid('sem4SPI')"
                     >
                       <i class="bi bi-exclamation-circle me-1"></i>
                       <span *ngIf="studentForm.get('sem4SPI')?.errors?.['min']"
@@ -836,11 +836,11 @@
                       formControlName="sem5SPI"
                       step="0.01"
                       placeholder="0.00"
-                      [class.is-invalid]="shouldShowError('sem5SPI')"
+                      [class.is-invalid]="isFieldInvalid('sem5SPI')"
                     />
                     <div
                       class="invalid-feedback"
-                      *ngIf="shouldShowError('sem5SPI')"
+                      *ngIf="isFieldInvalid('sem5SPI')"
                     >
                       <i class="bi bi-exclamation-circle me-1"></i>
                       <span *ngIf="studentForm.get('sem5SPI')?.errors?.['min']"
@@ -864,11 +864,11 @@
                       formControlName="sem6SPI"
                       step="0.01"
                       placeholder="0.00"
-                      [class.is-invalid]="shouldShowError('sem6SPI')"
+                      [class.is-invalid]="isFieldInvalid('sem6SPI')"
                     />
                     <div
                       class="invalid-feedback"
-                      *ngIf="shouldShowError('sem6SPI')"
+                      *ngIf="isFieldInvalid('sem6SPI')"
                     >
                       <i class="bi bi-exclamation-circle me-1"></i>
                       <span *ngIf="studentForm.get('sem6SPI')?.errors?.['min']"
@@ -892,11 +892,11 @@
                       formControlName="sem7SPI"
                       step="0.01"
                       placeholder="0.00"
-                      [class.is-invalid]="shouldShowError('sem7SPI')"
+                      [class.is-invalid]="isFieldInvalid('sem7SPI')"
                     />
                     <div
                       class="invalid-feedback"
-                      *ngIf="shouldShowError('sem7SPI')"
+                      *ngIf="isFieldInvalid('sem7SPI')"
                     >
                       <i class="bi bi-exclamation-circle me-1"></i>
                       <span *ngIf="studentForm.get('sem7SPI')?.errors?.['min']"
@@ -945,11 +945,11 @@
                       formControlName="address"
                       rows="3"
                       placeholder="Enter full address"
-                      [class.is-invalid]="shouldShowError('address')"
+                      [class.is-invalid]="isFieldInvalid('address')"
                     ></textarea>
                     <div
                       class="invalid-feedback"
-                      *ngIf="shouldShowError('address')"
+                      *ngIf="isFieldInvalid('address')"
                     >
                       <i class="bi bi-exclamation-circle me-1"></i>Address is
                       required
@@ -965,7 +965,7 @@
                       class="form-select"
                       id="state"
                       formControlName="state"
-                      [class.is-invalid]="shouldShowError('state')"
+                      [class.is-invalid]="isFieldInvalid('state')"
                     >
                       <option value="">Select State</option>
                       <option *ngFor="let state of states()" [value]="state">
@@ -974,7 +974,7 @@
                     </select>
                     <div
                       class="invalid-feedback"
-                      *ngIf="shouldShowError('state')"
+                      *ngIf="isFieldInvalid('state')"
                     >
                       <i class="bi bi-exclamation-circle me-1"></i>State is
                       required
@@ -990,7 +990,7 @@
                       class="form-select"
                       id="city"
                       formControlName="city"
-                      [class.is-invalid]="shouldShowError('city')"
+                      [class.is-invalid]="isFieldInvalid('city')"
                     >
                       <option value="">Select City</option>
                       <option *ngFor="let city of cities()" [value]="city">
@@ -999,7 +999,7 @@
                     </select>
                     <div
                       class="invalid-feedback"
-                      *ngIf="shouldShowError('city')"
+                      *ngIf="isFieldInvalid('city')"
                     >
                       <i class="bi bi-exclamation-circle me-1"></i>City is
                       required
@@ -1055,10 +1055,10 @@
                         accept=".pdf,.doc,.docx"
                       />
                       <button
-                        *ngIf="hasFile('resume')"
+                        *ngIf="fileNames['resume']"
                         class="btn btn-outline-danger"
                         type="button"
-                        (click)="removeFile('resume', $event)"
+                        (click)="removeFile('resume')"
                       >
                         <i class="bi bi-trash"></i>
                       </button>
@@ -1066,7 +1066,7 @@
                     <div class="form-text">
                       <i class="bi bi-info-circle me-1"></i>Accepted formats:
                       PDF, DOC, DOCX
-                      <span *ngIf="hasFile('resume')" class="text-success ms-2">
+                      <span *ngIf="fileNames['resume']" class="text-success ms-2">
                         <i class="bi bi-check-circle me-1"></i
                         >{{ getFileName("resume") }}
                       </span>
@@ -1094,10 +1094,10 @@
                         accept=".pdf,.jpg,.jpeg,.png"
                       />
                       <button
-                        *ngIf="hasFile('sscMarksheet')"
+                        *ngIf="fileNames['sscMarksheet']"
                         class="btn btn-outline-danger"
                         type="button"
-                        (click)="removeFile('sscMarksheet', $event)"
+                        (click)="removeFile('sscMarksheet')"
                       >
                         <i class="bi bi-trash"></i>
                       </button>
@@ -1105,7 +1105,7 @@
                     <div class="form-text">
                       <i class="bi bi-info-circle me-1"></i>PDF or Image
                       <span
-                        *ngIf="hasFile('sscMarksheet')"
+                        *ngIf="fileNames['sscMarksheet']"
                         class="text-success ms-2"
                       >
                         <i class="bi bi-check-circle me-1"></i
@@ -1128,10 +1128,10 @@
                         accept=".pdf,.jpg,.jpeg,.png"
                       />
                       <button
-                        *ngIf="hasFile('hscMarksheet')"
+                        *ngIf="fileNames['hscMarksheet']"
                         class="btn btn-outline-danger"
                         type="button"
-                        (click)="removeFile('hscMarksheet', $event)"
+                        (click)="removeFile('hscMarksheet')"
                       >
                         <i class="bi bi-trash"></i>
                       </button>
@@ -1139,7 +1139,7 @@
                     <div class="form-text">
                       <i class="bi bi-info-circle me-1"></i>PDF or Image
                       <span
-                        *ngIf="hasFile('hscMarksheet')"
+                        *ngIf="fileNames['hscMarksheet']"
                         class="text-success ms-2"
                       >
                         <i class="bi bi-check-circle me-1"></i
@@ -1162,10 +1162,10 @@
                         accept=".pdf,.jpg,.jpeg,.png"
                       />
                       <button
-                        *ngIf="hasFile('diplomaCertificate')"
+                        *ngIf="fileNames['diplomaCertificate']"
                         class="btn btn-outline-danger"
                         type="button"
-                        (click)="removeFile('diplomaCertificate', $event)"
+                        (click)="removeFile('diplomaCertificate')"
                       >
                         <i class="bi bi-trash"></i>
                       </button>
@@ -1173,7 +1173,7 @@
                     <div class="form-text">
                       <i class="bi bi-info-circle me-1"></i>PDF or Image
                       <span
-                        *ngIf="hasFile('diplomaCertificate')"
+                        *ngIf="fileNames['diplomaCertificate']"
                         class="text-success ms-2"
                       >
                         <i class="bi bi-check-circle me-1"></i
@@ -1203,16 +1203,16 @@
                         accept=".pdf,.jpg,.jpeg,.png"
                       />
                       <button
-                        *ngIf="hasFile('sem1Marksheet')"
+                        *ngIf="fileNames['sem1Marksheet']"
                         class="btn btn-outline-danger"
                         type="button"
-                        (click)="removeFile('sem1Marksheet', $event)"
+                        (click)="removeFile('sem1Marksheet')"
                       >
                         <i class="bi bi-trash"></i>
                       </button>
                     </div>
                     <span
-                      *ngIf="hasFile('sem1Marksheet')"
+                      *ngIf="fileNames['sem1Marksheet']"
                       class="text-success small"
                     >
                       <i class="bi bi-check-circle me-1"></i
@@ -1234,16 +1234,16 @@
                         accept=".pdf,.jpg,.jpeg,.png"
                       />
                       <button
-                        *ngIf="hasFile('sem2Marksheet')"
+                        *ngIf="fileNames['sem2Marksheet']"
                         class="btn btn-outline-danger"
                         type="button"
-                        (click)="removeFile('sem2Marksheet', $event)"
+                        (click)="removeFile('sem2Marksheet')"
                       >
                         <i class="bi bi-trash"></i>
                       </button>
                     </div>
                     <span
-                      *ngIf="hasFile('sem2Marksheet')"
+                      *ngIf="fileNames['sem2Marksheet']"
                       class="text-success small"
                     >
                       <i class="bi bi-check-circle me-1"></i
@@ -1265,16 +1265,16 @@
                         accept=".pdf,.jpg,.jpeg,.png"
                       />
                       <button
-                        *ngIf="hasFile('sem3Marksheet')"
+                        *ngIf="fileNames['sem3Marksheet']"
                         class="btn btn-outline-danger"
                         type="button"
-                        (click)="removeFile('sem3Marksheet', $event)"
+                        (click)="removeFile('sem3Marksheet')"
                       >
                         <i class="bi bi-trash"></i>
                       </button>
                     </div>
                     <span
-                      *ngIf="hasFile('sem3Marksheet')"
+                      *ngIf="fileNames['sem3Marksheet']"
                       class="text-success small"
                     >
                       <i class="bi bi-check-circle me-1"></i
@@ -1296,16 +1296,16 @@
                         accept=".pdf,.jpg,.jpeg,.png"
                       />
                       <button
-                        *ngIf="hasFile('sem4Marksheet')"
+                        *ngIf="fileNames['sem4Marksheet']"
                         class="btn btn-outline-danger"
                         type="button"
-                        (click)="removeFile('sem4Marksheet', $event)"
+                        (click)="removeFile('sem4Marksheet')"
                       >
                         <i class="bi bi-trash"></i>
                       </button>
                     </div>
                     <span
-                      *ngIf="hasFile('sem4Marksheet')"
+                      *ngIf="fileNames['sem4Marksheet']"
                       class="text-success small"
                     >
                       <i class="bi bi-check-circle me-1"></i
@@ -1327,16 +1327,16 @@
                         accept=".pdf,.jpg,.jpeg,.png"
                       />
                       <button
-                        *ngIf="hasFile('sem5Marksheet')"
+                        *ngIf="fileNames['sem5Marksheet']"
                         class="btn btn-outline-danger"
                         type="button"
-                        (click)="removeFile('sem5Marksheet', $event)"
+                        (click)="removeFile('sem5Marksheet')"
                       >
                         <i class="bi bi-trash"></i>
                       </button>
                     </div>
                     <span
-                      *ngIf="hasFile('sem5Marksheet')"
+                      *ngIf="fileNames['sem5Marksheet']"
                       class="text-success small"
                     >
                       <i class="bi bi-check-circle me-1"></i
@@ -1358,16 +1358,16 @@
                         accept=".pdf,.jpg,.jpeg,.png"
                       />
                       <button
-                        *ngIf="hasFile('sem6Marksheet')"
+                        *ngIf="fileNames['sem6Marksheet']"
                         class="btn btn-outline-danger"
                         type="button"
-                        (click)="removeFile('sem6Marksheet', $event)"
+                        (click)="removeFile('sem6Marksheet')"
                       >
                         <i class="bi bi-trash"></i>
                       </button>
                     </div>
                     <span
-                      *ngIf="hasFile('sem6Marksheet')"
+                      *ngIf="fileNames['sem6Marksheet']"
                       class="text-success small"
                     >
                       <i class="bi bi-check-circle me-1"></i
@@ -1389,16 +1389,16 @@
                         accept=".pdf,.jpg,.jpeg,.png"
                       />
                       <button
-                        *ngIf="hasFile('sem7Marksheet')"
+                        *ngIf="fileNames['sem7Marksheet']"
                         class="btn btn-outline-danger"
                         type="button"
-                        (click)="removeFile('sem7Marksheet', $event)"
+                        (click)="removeFile('sem7Marksheet')"
                       >
                         <i class="bi bi-trash"></i>
                       </button>
                     </div>
                     <span
-                      *ngIf="hasFile('sem7Marksheet')"
+                      *ngIf="fileNames['sem7Marksheet']"
                       class="text-success small"
                     >
                       <i class="bi bi-check-circle me-1"></i
